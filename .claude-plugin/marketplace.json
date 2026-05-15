@@ -1,0 +1,7 @@
+{
+  "$schema": "https://claude.com/schemas/marketplace.json",
+  "name": "my-plugin",
+  "version": "0.1.0",
+  "description": "",
+  "plugins": []
+}
