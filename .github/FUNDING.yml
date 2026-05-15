@@ -1,0 +1,17 @@
+# GitHub Sponsors / external funding sources
+# Edit this file to add your preferred funding platforms.
+# Once any one of these is set + the platform is actually configured,
+# GitHub displays a "Sponsor" button at the top of the repo.
+
+github: [steph-frtech]
+
+# Other supported platforms (uncomment + fill in):
+# patreon: your-patreon-handle
+# open_collective: your-collective
+# ko_fi: your-ko-fi-handle
+# tidelift: npm/claude-code-up
+# liberapay: your-liberapay-handle
+# issuehunt: your-issuehunt-handle
+# polar: your-polar-handle
+# buy_me_a_coffee: your-bmac-handle
+# custom: ["https://your-paypal.me/link", "https://your-website.com/donate"]
