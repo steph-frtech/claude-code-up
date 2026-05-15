@@ -6,7 +6,7 @@
       "name": "Expo (create-expo-app)",
       "description": "Bootstrap React Native app via Expo, TypeScript default template",
       "command": "npx",
-      "args": ["-y", "create-expo-app@latest", "."],
+      "args": ["-y", "create-expo-app@latest", "{{name}}"],
       "matchFrameworks": ["expo", "rn"]
     },
     {
@@ -17,7 +17,7 @@
       "args": [
         "-y",
         "create-next-app@latest",
-        ".",
+        "{{name}}",
         "--typescript",
         "--app",
         "--tailwind",
@@ -31,7 +31,7 @@
       "name": "Vite + React (TypeScript)",
       "description": "Vite + React + TS scaffold",
       "command": "npm",
-      "args": ["create", "vite@latest", ".", "--", "--template", "react-ts"],
+      "args": ["create", "vite@latest", "{{name}}", "--", "--template", "react-ts"],
       "matchFrameworks": ["react-vite"]
     },
     {
@@ -39,7 +39,7 @@
       "name": "Vue 3 (create-vue)",
       "description": "Interactive Vue 3 scaffolder",
       "command": "npm",
-      "args": ["create", "vue@latest", "."],
+      "args": ["create", "vue@latest", "{{name}}"],
       "matchFrameworks": ["vue"]
     },
     {
@@ -47,7 +47,7 @@
       "name": "SvelteKit (create-svelte)",
       "description": "Interactive SvelteKit scaffolder",
       "command": "npm",
-      "args": ["create", "svelte@latest", "."],
+      "args": ["create", "svelte@latest", "{{name}}"],
       "matchFrameworks": ["svelte"]
     },
     {
@@ -55,7 +55,7 @@
       "name": "Remix (create-remix)",
       "description": "Remix app scaffold",
       "command": "npx",
-      "args": ["-y", "create-remix@latest", "."],
+      "args": ["-y", "create-remix@latest", "{{name}}"],
       "matchFrameworks": ["remix"]
     },
     {
@@ -63,7 +63,7 @@
       "name": "Astro (create-astro)",
       "description": "Interactive Astro scaffolder",
       "command": "npm",
-      "args": ["create", "astro@latest", "."],
+      "args": ["create", "astro@latest", "{{name}}"],
       "matchFrameworks": ["astro"]
     },
     {
@@ -71,7 +71,7 @@
       "name": "NestJS (nest CLI)",
       "description": "Bootstrap a NestJS API (TypeScript)",
       "command": "npx",
-      "args": ["-y", "@nestjs/cli", "new", "."],
+      "args": ["-y", "@nestjs/cli", "new", "{{name}}"],
       "matchFrameworks": ["nestjs"]
     },
     {

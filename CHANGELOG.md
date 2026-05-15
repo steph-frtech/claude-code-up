@@ -5,6 +5,29 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ---
 
+## [0.1.3] — 2026-05-15
+
+### Fixed
+
+- **Statusline showed false `⚠` on agents and scripts.** Root cause was a double-count: `wshobson.json` ships `code-reviewer` and `security-auditor` as `tier: "default"`, which clashes with the bundled subagents that also write those names. Wshobson overwrote the files on disk but both components incremented their `count`, so `stack.json.totals.project.agents = 16` while disk had 14 → `14/16 ⚠`. `flattenSpecificAgents` now skips names already on disk and only counts what it actually wrote (first-writer-wins).
+- **Statusline `📜 1/2 ⚠ scripts`** — the segment globbed `.claude/scripts/*.sh` only, missing the top-level `.claude/statusline.sh` that Claude Code's `statusLine.command` expects. Statusline now adds `+1` when `.claude/statusline.sh` exists, so `2/2 ✓` shows correctly.
+
+---
+
+## [0.1.2] — 2026-05-15
+
+### Fixed
+
+- **Framework matching was broken end-to-end.** The funnel emitted composite IDs (`mobile:ts:expo`) but every catalog match expects bare IDs (`expo`). Result: the Expo scaffolder never ran, and all framework-keyed command bundles (`expo-core-extras`, `expo-stripe-rn`, `expo-revenuecat`, `expo-state-zustand`, `expo-forms-libs`, `expo-icons-libs`, `expo-better-auth`) silently disappeared from the prompt. The funnel now stores bare framework IDs and surfaces category/language only in the display label, so applyWhen rules of the shape `frameworks: ["expo"]` actually fire.
+- **Scaffolders now use the project name**, not `.`. `npx create-expo-app@latest my-app` instead of `npx create-expo-app@latest .` — the user sees the app name on the command line, and `create-expo-app` gets to create its own directory like upstream intends. Supports the `{{name}}` placeholder in `catalog/scaffolders.json` so new scaffolders can opt into the same behavior.
+
+### Changed
+
+- When a scaffolder uses `{{name}}`, claude-code-up runs it from the **parent** directory and does not pre-create the target dir (most scaffolders refuse to run otherwise). Empty pre-created target dirs are cleaned up before invocation; if the scaffolder errors, a fresh `mkdir` is performed so the rest of the flow still completes.
+- **Biome is now the default formatter+linter**; Prettier+ESLint is downgraded to opt-in only (`applyWhen: {}`) so you don't end up with both tools fighting over the same files. The Prettier+ESLint bundle still appears in the command-bundles prompt — uncoloured/unchecked — so legacy projects can pick it explicitly.
+
+---
+
 ## [0.1.1] — 2026-05-15
 
 ### Fixed
@@ -95,5 +118,7 @@ Initial public release.
 
 ---
 
+[0.1.3]: https://github.com/steph-frtech/claude-code-up/releases/tag/v0.1.3
+[0.1.2]: https://github.com/steph-frtech/claude-code-up/releases/tag/v0.1.2
 [0.1.1]: https://github.com/steph-frtech/claude-code-up/releases/tag/v0.1.1
 [0.1.0]: https://github.com/steph-frtech/claude-code-up/releases/tag/v0.1.0

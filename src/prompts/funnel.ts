@@ -63,22 +63,24 @@ export async function askFunnel(): Promise<FunnelAnswers | null> {
   const languages = await multi("Language(s)?", langOpts);
   if (languages === null) return null;
 
-  // 3. Framework — keyed by category:language; show with the pair as hint
-  const fwSeen = new Set<string>();
-  const fwOpts: FunnelOption[] = [];
+  // 3. Framework — bare IDs (e.g. "expo"), with category/language only in the
+  // display label so applyWhen rules like `frameworks: ["expo"]` actually match.
+  // If a framework appears in multiple (cat,lang) pairs we list all contexts.
+  const fwAgg = new Map<string, { name: string; contexts: string[] }>();
   for (const cat of categories) {
     for (const lang of languages) {
-      const key = `${cat}:${lang}`;
-      const list = FRAMEWORKS_BY_LANG_CATEGORY[key] ?? [];
+      const list = FRAMEWORKS_BY_LANG_CATEGORY[`${cat}:${lang}`] ?? [];
       for (const f of list) {
-        const tagged = `${key}:${f.id}`;
-        if (!fwSeen.has(tagged)) {
-          fwSeen.add(tagged);
-          fwOpts.push({ id: tagged, name: `${f.name} — ${cat}/${lang}` });
-        }
+        const entry = fwAgg.get(f.id) ?? { name: f.name, contexts: [] };
+        entry.contexts.push(`${cat}/${lang}`);
+        fwAgg.set(f.id, entry);
       }
     }
   }
+  const fwOpts: FunnelOption[] = [...fwAgg.entries()].map(([id, e]) => ({
+    id,
+    name: `${e.name} — ${e.contexts.join(", ")}`,
+  }));
   const frameworks = await multi("Framework(s)?", fwOpts);
   if (frameworks === null) return null;
 

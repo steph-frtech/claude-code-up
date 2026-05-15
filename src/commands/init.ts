@@ -183,10 +183,32 @@ export async function init(opts: InitOptions): Promise<void> {
 
   const mergeMode = answers.wipeMode === "merge";
 
+  // If the scaffolder uses {{name}} (creates the subdir itself, runs from
+  // parent), we must NOT pre-mkdir targetPath — most scaffolders refuse to
+  // run when their target dir already exists. Detect this upfront.
+  const scaffolderUsesNamePlaceholder =
+    !!answers.scaffolder &&
+    answers.scaffolder.args.some((a) => a.includes("{{name}}"));
+
   if (answers.github?.mode === "clone-existing") {
     s.start(`Cloning ${answers.github.owner}/${answers.github.repoName}`);
     await cloneFromGitHub({ targetPath, github: answers.github });
     s.stop(`Cloned into ${path.relative(process.cwd(), targetPath) || "."}`);
+  } else if (scaffolderUsesNamePlaceholder) {
+    // Make sure parent exists; the scaffolder will create targetPath itself.
+    await mkdir(path.dirname(targetPath), { recursive: true });
+    // If targetPath was pre-created and is empty, remove it so the scaffolder
+    // can claim the name without complaining.
+    if (existsSync(targetPath)) {
+      try {
+        const entries = await readdir(targetPath);
+        if (entries.length === 0) {
+          await rm(targetPath, { recursive: true, force: true });
+        }
+      } catch {
+        // Best-effort cleanup; scaffolder will fail loudly if it can't proceed.
+      }
+    }
   } else {
     await mkdir(targetPath, { recursive: true });
   }
@@ -196,8 +218,14 @@ export async function init(opts: InitOptions): Promise<void> {
   // sees the scaffolder's output AND can answer its interactive prompts.
   let scaffolderRan = false;
   if (answers.scaffolder) {
+    const resolvedArgs = answers.scaffolder.args.map((a) =>
+      a.replace(/\{\{name\}\}/g, answers.name),
+    );
+    const scaffolderCwd = scaffolderUsesNamePlaceholder
+      ? path.dirname(targetPath)
+      : targetPath;
     p.log.step(
-      `Running ${pc.cyan(`${answers.scaffolder.command} ${answers.scaffolder.args.join(" ")}`)} in ${path.relative(process.cwd(), targetPath) || "."}`,
+      `Running ${pc.cyan(`${answers.scaffolder.command} ${resolvedArgs.join(" ")}`)} in ${path.relative(process.cwd(), scaffolderCwd) || "."}`,
     );
     p.log.message(
       pc.dim("Scaffolder is interactive — its prompts will appear below. Respond inline."),
@@ -205,18 +233,28 @@ export async function init(opts: InitOptions): Promise<void> {
     // Add a visible separator so the scaffolder output is clearly distinct.
     process.stdout.write("\n" + pc.dim("─────────── scaffolder output ───────────") + "\n");
     try {
-      await execa(answers.scaffolder.command, answers.scaffolder.args, {
-        cwd: targetPath,
+      await execa(answers.scaffolder.command, resolvedArgs, {
+        cwd: scaffolderCwd,
         stdio: "inherit",
       });
       process.stdout.write(pc.dim("──────────── end scaffolder ────────────") + "\n");
       p.log.success("Scaffolder completed");
       scaffolderRan = true;
+      // Some scaffolders may write to a slightly different folder than expected
+      // (e.g. case differences). Ensure targetPath now exists so downstream
+      // generators don't fail; if not, fall back to mkdir.
+      if (!existsSync(targetPath)) {
+        await mkdir(targetPath, { recursive: true });
+      }
     } catch (err) {
       process.stdout.write(pc.dim("──────────── end scaffolder ────────────") + "\n");
       p.log.warn(
         `Scaffolder exited with error — continuing with claude-code-up config anyway. (${(err as Error).message.slice(0, 120)})`,
       );
+      // Make sure targetPath exists so the rest of the flow can proceed.
+      if (!existsSync(targetPath)) {
+        await mkdir(targetPath, { recursive: true });
+      }
     }
   }
 

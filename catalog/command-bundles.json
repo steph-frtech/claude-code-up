@@ -248,17 +248,17 @@
 
     {
       "id": "prettier-eslint-ts",
-      "name": "Prettier + ESLint (TS)",
-      "description": "Prettier + ESLint with TS support",
-      "applyWhen": { "languages": ["ts"] },
+      "name": "Prettier + ESLint (TS) — legacy",
+      "description": "Opt-in only. Use it if you have an existing ESLint+Prettier setup or need to integrate with a tool that expects them. Default formatter+linter is Biome below.",
+      "applyWhen": {},
       "commands": [
         { "exec": "npm install -D prettier eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-config-prettier", "desc": "Prettier + ESLint + TS plugins" }
       ]
     },
     {
       "id": "biome-ts",
-      "name": "Biome (Prettier + ESLint alternative)",
-      "description": "Single Rust-based formatter+linter",
+      "name": "Biome (default formatter + linter, replaces Prettier+ESLint)",
+      "description": "Single Rust-based formatter+linter. Faster, single config, drop-in for most projects.",
       "applyWhen": { "languages": ["ts"] },
       "commands": [
         { "exec": "npm install -D --save-exact @biomejs/biome", "desc": "Biome" },

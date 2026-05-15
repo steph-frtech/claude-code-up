@@ -121,6 +121,12 @@ export async function flattenSpecificAgents(
 
   const want = new Set(agentNames);
   const found = new Set<string>();
+  // Skip names already written by an earlier component (e.g. the bundled
+  // subagents). Otherwise wshobson would overwrite them on disk AND double-
+  // count them in stack.json totals (since each component reports its own
+  // count). The first writer wins; subsequent writers count zero for that
+  // file.
+  let writtenNew = 0;
 
   const plugins = (await readdir(pluginsDir, { withFileTypes: true })).filter(
     (e) => e.isDirectory() && !e.name.startsWith("."),
@@ -134,15 +140,21 @@ export async function flattenSpecificAgents(
       if (!f.endsWith(".md")) continue;
       const base = f.replace(/\.md$/, "");
       if (!want.has(base) || found.has(base)) continue;
-      const src = path.join(agentsDir, f);
       const dest = path.join(agentsTarget, f);
+      if (existsSync(dest)) {
+        // Already on disk from an earlier component — leave it, don't recount.
+        found.add(base);
+        continue;
+      }
+      const src = path.join(agentsDir, f);
       await copyFile(src, dest);
       found.add(base);
+      writtenNew++;
     }
   }
 
   const missing = [...want].filter((n) => !found.has(n));
-  return { written: found.size, missing };
+  return { written: writtenNew, missing };
 }
 
 export async function listWshobsonPluginsViaApi(): Promise<string[] | null> {

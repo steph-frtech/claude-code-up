@@ -1,6 +1,6 @@
 import { init } from "./commands/init.js";
 
-const VERSION = "0.1.1";
+const VERSION = "0.1.3";
 
 const args = process.argv.slice(2);
 

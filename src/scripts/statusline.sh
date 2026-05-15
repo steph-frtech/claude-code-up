@@ -136,7 +136,12 @@ if [ -f "$stack_json" ] || [ -f "$mcp_json" ] || [ -f "$settings_json" ]; then
   cc_skills_k=$(find "$dir/.claude/skills" -maxdepth 2 -name "SKILL.md" 2>/dev/null | wc -l | tr -d ' ')
   cc_agents_k=$(find "$dir/.claude/agents" -maxdepth 1 -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
   cc_commands_k=$(find "$dir/.claude/commands" -maxdepth 1 -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
+  # Scripts live in two places: .claude/scripts/*.sh (audit.sh etc) and the
+  # statusline.sh which Claude Code wants at .claude/statusline.sh.
   cc_scripts_k=$(find "$dir/.claude/scripts" -maxdepth 1 -name "*.sh" 2>/dev/null | wc -l | tr -d ' ')
+  if [ -f "$dir/.claude/statusline.sh" ]; then
+    cc_scripts_k=$((cc_scripts_k + 1))
+  fi
   cc_hooks_k=$cc_hooks_t   # hooks: trust settings.json
   cc_mcp_k=0
   if [ -f "$mcp_status" ]; then

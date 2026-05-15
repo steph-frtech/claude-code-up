@@ -10,13 +10,21 @@ export async function askCommandBundles(
 ): Promise<CommandBundlesAnswer | null> {
   if (!funnel) return { bundleIds: [] };
 
+  // Visible = funnel-matched bundles + opt-in legacy ones (empty applyWhen).
+  // Preselected = only funnel-matched bundles. Opt-in bundles must be toggled
+  // by the user (e.g. Prettier+ESLint when Biome is the default).
+  const isOptIn = (b: (typeof COMMAND_BUNDLES)[number]) =>
+    b.applyWhen !== undefined && Object.keys(b.applyWhen).length === 0;
   const matching = COMMAND_BUNDLES.filter((b) =>
     matchesApplyWhen(b.applyWhen, funnel),
   );
+  const visible = COMMAND_BUNDLES.filter(
+    (b) => matchesApplyWhen(b.applyWhen, funnel) || isOptIn(b),
+  );
 
-  if (matching.length === 0) return { bundleIds: [] };
+  if (visible.length === 0) return { bundleIds: [] };
 
-  const options = matching.map((b) => {
+  const options = visible.map((b) => {
     const cmdCount = b.commands.length;
     const trigger = formatTrigger({
       id: b.id,

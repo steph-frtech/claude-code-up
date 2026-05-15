@@ -1,6 +1,6 @@
 {
   "name": "claude-code-up",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Bootstrap a Claude Code project with the right agents, skills, MCPs, hooks, scaffolders — JSON-driven decision tree, project-scope, e2e verified.",
   "keywords": [
     "claude",
