@@ -5,6 +5,18 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ---
 
+## [0.1.1] — 2026-05-15
+
+### Fixed
+
+- Republished with a freshly built `dist/cli.js` reflecting the `ccup` → `claude-code-up` rename. The `0.1.0` tarball on npm still shipped the pre-rename bundle, so `npx claude-code-up --help` printed `ccup 0.1.0 — …` instead of the current branding.
+
+### Changed
+
+- README badges switched from "coming soon" to live npm version + downloads, CI status, and GitHub stars.
+
+---
+
 ## [0.1.0] — 2026-05-15
 
 Initial public release.
@@ -83,4 +95,5 @@ Initial public release.
 
 ---
 
+[0.1.1]: https://github.com/steph-frtech/claude-code-up/releases/tag/v0.1.1
 [0.1.0]: https://github.com/steph-frtech/claude-code-up/releases/tag/v0.1.0

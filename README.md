@@ -2,11 +2,14 @@
 
 > The fastest way to bootstrap a Claude Code project with the **right** skills, agents, MCPs, and hooks — pre-curated, project-scope only, fully JSON-driven.
 
-[![npm](https://img.shields.io/badge/npm-coming%20soon-orange.svg)](https://github.com/steph-frtech/claude-code-up)
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/claude-code-up.svg?color=cb3837)](https://www.npmjs.com/package/claude-code-up)
+[![npm downloads](https://img.shields.io/npm/dm/claude-code-up.svg)](https://www.npmjs.com/package/claude-code-up)
+[![CI](https://github.com/steph-frtech/claude-code-up/actions/workflows/ci.yml/badge.svg)](https://github.com/steph-frtech/claude-code-up/actions/workflows/ci.yml)
+[![license](https://img.shields.io/github/license/steph-frtech/claude-code-up.svg)](LICENSE)
 [![Node ≥18](https://img.shields.io/badge/node-%E2%89%A518-brightgreen.svg)](#requirements)
 [![Claude Code ≥2.1.32](https://img.shields.io/badge/Claude%20Code-%E2%89%A52.1.32-purple.svg)](https://claude.com/claude-code)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![GitHub stars](https://img.shields.io/github/stars/steph-frtech/claude-code-up.svg?style=social)](https://github.com/steph-frtech/claude-code-up/stargazers)
 
 ---
 
@@ -235,7 +238,7 @@ MCP initialize handshake: 3 ok · 1 failed · 1 skipped
 
 ## Roadmap
 
-- [ ] Publish to npm so `npx claude-code-up` works without the GitHub fork
+- [x] ~~Publish to npm so `npx claude-code-up` works without a GitHub clone~~ — shipped in `0.1.1`
 - [ ] Live D-key drill within the prompt (currently submits-and-redraws — works, but a single-frame interaction would be slicker)
 - [ ] User-local overrides (`~/.claude-code-up/items-override.json`) to promote/demote items per personal preference
 - [ ] More scaffolders: T3, Astro, Tauri, Solid Start, Remix Vite
