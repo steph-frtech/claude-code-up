@@ -41,8 +41,11 @@ export async function confirmPlan(opts: ConfirmPlanOptions): Promise<boolean> {
     if (f.orms.length > 0) lines.push(`${pc.bold("ORM")}        ${f.orms.join(", ")}`);
   }
   if (opts.scaffolder) {
+    const tpl = opts.scaffolder.templateId
+      ? pc.dim(` [template: ${opts.scaffolder.templateId}]`)
+      : "";
     lines.push(
-      `${pc.bold("Scaffold")}   ${pc.cyan(`${opts.scaffolder.command} ${opts.scaffolder.args.join(" ")}`)}`,
+      `${pc.bold("Scaffold")}   ${pc.cyan(`${opts.scaffolder.command} ${opts.scaffolder.args.join(" ")}`)}${tpl}`,
     );
   }
 

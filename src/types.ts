@@ -109,6 +109,7 @@ export interface ScaffolderAnswer {
   id: string;
   command: string;
   args: string[];
+  templateId?: string;
 }
 
 export interface CommandBundlesAnswer {

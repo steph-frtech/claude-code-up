@@ -4,10 +4,43 @@
     {
       "id": "expo",
       "name": "Expo (create-expo-app)",
-      "description": "Bootstrap React Native app via Expo, TypeScript default template",
+      "description": "Bootstrap React Native app via Expo",
       "command": "npx",
       "args": ["-y", "create-expo-app@latest", "{{name}}"],
-      "matchFrameworks": ["expo", "rn"]
+      "matchFrameworks": ["expo", "rn"],
+      "templates": [
+        {
+          "id": "default",
+          "name": "Default — Tabs + expo-router + TypeScript",
+          "description": "Recommended starter. File-based routing with bottom tabs, TS by default.",
+          "extraArgs": [],
+          "default": true
+        },
+        {
+          "id": "blank",
+          "name": "Blank — minimal (JavaScript)",
+          "description": "Empty React Native app, no router, plain JS.",
+          "extraArgs": ["--template", "blank"]
+        },
+        {
+          "id": "blank-typescript",
+          "name": "Blank — minimal (TypeScript)",
+          "description": "Empty React Native app, no router, TS.",
+          "extraArgs": ["--template", "blank-typescript"]
+        },
+        {
+          "id": "tabs",
+          "name": "Tabs (legacy)",
+          "description": "Older bottom-tabs starter. Prefer `default` unless you specifically want this layout.",
+          "extraArgs": ["--template", "tabs"]
+        },
+        {
+          "id": "bare-minimum",
+          "name": "Bare workflow — no Expo modules",
+          "description": "Vanilla React Native baseline. Use when you need native code control.",
+          "extraArgs": ["--template", "bare-minimum"]
+        }
+      ]
     },
     {
       "id": "nextjs",

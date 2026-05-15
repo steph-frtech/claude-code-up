@@ -203,6 +203,15 @@ const SHELL_SOURCES = [
     `export const SUPERPOWERS_ITEMS: ReadonlyArray<CatalogItemRaw> = ${JSON.stringify(itemsSuperpowers.items, null, 2)};\n` +
     `export const POCOCK_ITEMS: ReadonlyArray<CatalogItemRaw> = ${JSON.stringify(itemsPocock.items, null, 2)};\n` +
     "\n" +
+    "export interface ScaffolderTemplate {\n" +
+    "  id: string;\n" +
+    "  name: string;\n" +
+    "  description?: string;\n" +
+    "  /** Args appended to `args` when this template is picked. */\n" +
+    "  extraArgs: string[];\n" +
+    "  /** True for the entry shown first / pre-selected (the upstream default). */\n" +
+    "  default?: boolean;\n" +
+    "}\n" +
     "export interface ScaffolderRaw {\n" +
     "  id: string;\n" +
     "  name: string;\n" +
@@ -210,6 +219,8 @@ const SHELL_SOURCES = [
     "  command: string;\n" +
     "  args: string[];\n" +
     "  matchFrameworks: string[];\n" +
+    "  /** If present, ccup prompts the user to pick a template before running. */\n" +
+    "  templates?: ScaffolderTemplate[];\n" +
     "}\n" +
     `export const SCAFFOLDERS: ReadonlyArray<ScaffolderRaw> = ${JSON.stringify(scaffolders.scaffolders, null, 2)};\n` +
     "\n" +

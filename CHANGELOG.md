@@ -5,6 +5,15 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ---
 
+## [0.1.4] — 2026-05-15
+
+### Added
+
+- **Expo template prompt.** When you pick the Expo scaffolder, claude-code-up now asks which `create-expo-app` template to use — `default` (Tabs + expo-router + TS, pre-selected), `blank`, `blank-typescript`, `tabs` (legacy), or `bare-minimum`. The choice is passed through as `--template <name>` to `create-expo-app`. JSON-driven via a new optional `templates` field on `catalog/scaffolders.json` entries, so contributors can add the same prompt to any other scaffolder by listing their template options.
+- The chosen template ID is surfaced in the plan recap and stored in the scaffolder answer for traceability.
+
+---
+
 ## [0.1.3] — 2026-05-15
 
 ### Fixed
@@ -118,6 +127,7 @@ Initial public release.
 
 ---
 
+[0.1.4]: https://github.com/steph-frtech/claude-code-up/releases/tag/v0.1.4
 [0.1.3]: https://github.com/steph-frtech/claude-code-up/releases/tag/v0.1.3
 [0.1.2]: https://github.com/steph-frtech/claude-code-up/releases/tag/v0.1.2
 [0.1.1]: https://github.com/steph-frtech/claude-code-up/releases/tag/v0.1.1
