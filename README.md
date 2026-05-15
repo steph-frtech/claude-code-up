@@ -1,5 +1,5 @@
 # claude-code-up — Claude Code Up
-[![asciicast](https://asciinema.org/a/IzS7DfBBy59pFNMo.svg)](https://asciinema.org/a/IzS7DfBBy59pFNMo)
+![Claude Code Up demo](assets/claude-code-up-demo-90.gif)
 
 > The fastest way to bootstrap a Claude Code project with the **right** skills, agents, MCPs, and hooks — pre-curated, project-scope only, fully JSON-driven.
 
