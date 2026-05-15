@@ -44,14 +44,25 @@ export async function applyCommandBundles(opts: {
     };
 
     for (const cmd of bundle.commands) {
-      const { command, args } = splitCommand(cmd.exec);
+      const shell = (cmd as { shell?: boolean }).shell === true;
       p.log.message(pc.dim(`  $ ${cmd.exec}${cmd.desc ? ` ${pc.dim(`# ${cmd.desc}`)}` : ""}`));
       try {
-        await execa(command, args, {
-          cwd: opts.targetPath,
-          stdio: "inherit",
-          timeout: 300_000,
-        });
+        if (shell) {
+          // Whole exec string handed to bash -c so heredocs / redirections /
+          // `&&` / pipes work as written in the catalog.
+          await execa("bash", ["-c", cmd.exec], {
+            cwd: opts.targetPath,
+            stdio: "inherit",
+            timeout: 300_000,
+          });
+        } else {
+          const { command, args } = splitCommand(cmd.exec);
+          await execa(command, args, {
+            cwd: opts.targetPath,
+            stdio: "inherit",
+            timeout: 300_000,
+          });
+        }
         result.ok++;
       } catch (err) {
         result.failed++;

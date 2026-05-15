@@ -224,7 +224,13 @@ const SHELL_SOURCES = [
     "}\n" +
     `export const SCAFFOLDERS: ReadonlyArray<ScaffolderRaw> = ${JSON.stringify(scaffolders.scaffolders, null, 2)};\n` +
     "\n" +
-    "export interface CommandBundleCommand { exec: string; desc?: string }\n" +
+    "export interface CommandBundleCommand {\n" +
+    "  exec: string;\n" +
+    "  desc?: string;\n" +
+    "  /** When true, run via shell (bash -c) so the exec string can use\n" +
+    "   *  redirections, heredocs, `&&`, etc. Default false (token-split). */\n" +
+    "  shell?: boolean;\n" +
+    "}\n" +
     "export interface CommandBundleRaw {\n" +
     "  id: string;\n" +
     "  name: string;\n" +
@@ -235,6 +241,10 @@ const SHELL_SOURCES = [
     "    frameworks?: string[];\n" +
     "    databases?: string[];\n" +
     "    orms?: string[];\n" +
+    "    /** Bundle only matches if at least one of these MCP IDs was picked\n" +
+    "     *  in the MCP step. Lets us gate Stripe/RevenueCat/Better-Auth\n" +
+    "     *  bundles on the user actually choosing the corresponding MCP. */\n" +
+    "    mcps?: string[];\n" +
     "  };\n" +
     "  commands: CommandBundleCommand[];\n" +
     "}\n" +

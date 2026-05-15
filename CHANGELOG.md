@@ -5,6 +5,23 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ---
 
+## [0.1.5] — 2026-05-15
+
+### Added
+
+- **`Claude Code plugin` is a first-class project category** in the funnel. Pick it for plugin authoring (skill / agent / slash command / MCP server / hook). Languages — `md`, `ts`, `py`, `bash` — surface the right framework subtypes (`cc-plugin-full`, `cc-skill`, `cc-agent`, `cc-command`, `cc-mcp-ts`, `cc-mcp-py`, `cc-hook-bash`). Each subtype gets a matching command bundle that scaffolds the relevant skeleton **in the current directory** — no parent-cwd / `{{name}}` magic, since you're authoring a plugin in-place.
+- **`shell: true` on command-bundle commands** — when set, the `exec` string is passed straight to `bash -c`, so the catalog can write files via heredocs (`cat > file <<'EOF' … EOF`) instead of fighting with the token-splitter. Used by every claude-plugin skeleton bundle to inline `marketplace.json`, `SKILL.md`, `agents/example.md`, MCP server stubs, etc.
+
+### Fixed
+
+- **Command bundles now depend on the actual MCP picks**, not just the funnel. `expo-revenuecat`, `expo-stripe-rn`, `expo-better-auth`, `nextjs-stripe-web`, `nextjs-better-auth` used to fire on framework match alone, so they ran even for users who didn't select the corresponding MCP. Bundle `applyWhen` now supports `mcps: string[]` — the bundle only matches when the user picked at least one of those MCPs in the MCP step. `askCommandBundles` threads the MCP selection through so the gate is honored.
+
+### Changed
+
+- README mentions [claude-mem](https://github.com/thedotmack/claude-mem) explicitly in the "Installs the harness" section and the "What gets installed" table — it's user-scope so claude-code-up documents `npx claude-mem install` in `STACK.md` rather than auto-running it.
+
+---
+
 ## [0.1.4] — 2026-05-15
 
 ### Added
@@ -127,6 +144,7 @@ Initial public release.
 
 ---
 
+[0.1.5]: https://github.com/steph-frtech/claude-code-up/releases/tag/v0.1.5
 [0.1.4]: https://github.com/steph-frtech/claude-code-up/releases/tag/v0.1.4
 [0.1.3]: https://github.com/steph-frtech/claude-code-up/releases/tag/v0.1.3
 [0.1.2]: https://github.com/steph-frtech/claude-code-up/releases/tag/v0.1.2

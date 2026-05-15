@@ -21,7 +21,7 @@ import { CURATED_SKILLS_DATA } from "../catalog/loader.js";
 import { AUDIT_SH, STATUSLINE_SH } from "../templates.js";
 import { renderStackMd } from "../stack/render.js";
 
-const CCUP_VERSION = "0.1.4";
+const CCUP_VERSION = "0.1.5";
 
 async function inspectItem(
   targetPath: string,

@@ -7,6 +7,7 @@
     { "id": "fullstack", "name": "Fullstack" },
     { "id": "data", "name": "Data / ML" },
     { "id": "cli", "name": "CLI / Library" },
+    { "id": "claude-plugin", "name": "Claude Code plugin (skill / agent / command / MCP)" },
     { "id": "generic", "name": "Generic / other" }
   ],
   "languagesByCategory": {
@@ -41,6 +42,12 @@
       { "id": "py", "name": "Python" },
       { "id": "go", "name": "Go" },
       { "id": "rust", "name": "Rust" }
+    ],
+    "claude-plugin": [
+      { "id": "md", "name": "Markdown (skill / agent / slash command)" },
+      { "id": "ts", "name": "TypeScript (MCP server / hook)" },
+      { "id": "py", "name": "Python (MCP server)" },
+      { "id": "bash", "name": "Bash (hook script)" }
     ],
     "generic": []
   },
@@ -123,6 +130,22 @@
     ],
     "cli:rust": [
       { "id": "clap", "name": "clap" }
+    ],
+    "claude-plugin:md": [
+      { "id": "cc-plugin-full", "name": "Full plugin (marketplace.json + skills + agents + commands)" },
+      { "id": "cc-skill", "name": "Single skill (SKILL.md)" },
+      { "id": "cc-agent", "name": "Single subagent (agent .md)" },
+      { "id": "cc-command", "name": "Single slash command (.md)" }
+    ],
+    "claude-plugin:ts": [
+      { "id": "cc-mcp-ts", "name": "MCP server (TypeScript, stdio)" },
+      { "id": "cc-hook-ts", "name": "Hook script (TypeScript)" }
+    ],
+    "claude-plugin:py": [
+      { "id": "cc-mcp-py", "name": "MCP server (Python, stdio)" }
+    ],
+    "claude-plugin:bash": [
+      { "id": "cc-hook-bash", "name": "Hook script (Bash)" }
     ]
   },
   "databases": [

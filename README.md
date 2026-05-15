@@ -31,7 +31,7 @@ Most "Claude Code best practice" docs are 30-page Notion pages and a Twitter thr
 1. **Bootstraps your framework** — `npx create-expo-app@latest` / `create-next-app` / `create-vue` / 7 more, picked based on what you answered.tt
 2. **Curates the agents and skills** that match — 131 items from [wshobson/agents](https://github.com/wshobson/agents) + [obra/superpowers](https://github.com/obra/superpowers) + [Matt Pocock skills](https://github.com/mattpocock), filtered to ~16 defaults + the conditionals that fit your stack. The other ~50 noisy ones are skipped.
 3. **Writes `.mcp.json`** with the MCP servers your project actually uses — GitHub, Context7, Postgres, Supabase, Stripe, RevenueCat, Better Auth, Playwright. Credentials prompted (masked), `.env` written, `gitignore`d. Then each MCP is **smoke-tested end-to-end** with a real JSON-RPC `initialize` handshake.
-4. **Installs the harness** — Karpathy's CLAUDE.md, optional Superpowers/Pocock skills, agent-teams flag (research preview), pretty 256-color statusline, agentshield audit hook, project-scope `settings.json`.
+4. **Installs the harness** — Karpathy's CLAUDE.md, optional Superpowers/Pocock skills, [**claude-mem**](https://github.com/thedotmack/claude-mem) (persistent memory across sessions, documented in STACK.md), agent-teams flag (research preview), pretty 256-color statusline, agentshield audit hook, project-scope `settings.json`.
 5. **Creates the GitHub repo** (or clones an existing one), commits, pushes.
 6. **Runs `claude /init`** headless to verify everything is wired correctly. Then offers `claude doctor` for the official diagnostic.
 
@@ -104,6 +104,7 @@ Then a clear plan recap (with `◐` orange for partial selections and `⚠` warn
 | **MCPs** (8 servers) | GitHub, Context7, Playwright, Postgres, Supabase, Stripe, RevenueCat, Better Auth — preselected based on funnel | 2–7 typical |
 | **Bundled skills** | `octo-issue-tracker`, `octo-scenario-tester` (scenarios-before-code TDD discipline) | Opt-in |
 | **Bundled subagents** | `code-reviewer`, `security-auditor`, `test-writer` (short, focused) | Opt-in default |
+| **[claude-mem](https://github.com/thedotmack/claude-mem)** | Persistent memory across Claude Code sessions (compresses transcript context and re-injects on next launch). User-scope: claude-code-up documents `npx claude-mem install` in `STACK.md` rather than auto-running it (user-scope install). | Opt-in default |
 | **Project files** | `CLAUDE.md` (Karpathy), `.claude/statusline.sh` (executable, 256-color), `.claude/scripts/audit.sh` (agentshield), `.claude/settings.json`, `.claude/stack.json` (inventory), `STACK.md` (human-readable report) | Auto |
 
 All metadata lives in `catalog/*.json`. **Adding a new tool = editing one JSON file**, no TypeScript needed.

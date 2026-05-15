@@ -28,8 +28,8 @@
     {
       "id": "expo-stripe-rn",
       "name": "Expo + Stripe (React Native SDK)",
-      "description": "Stripe React Native payments SDK",
-      "applyWhen": { "frameworks": ["expo"] },
+      "description": "Stripe React Native payments SDK — only if you picked the Stripe MCP",
+      "applyWhen": { "frameworks": ["expo"], "mcps": ["stripe"] },
       "commands": [
         { "exec": "npm install @stripe/stripe-react-native", "desc": "Stripe RN SDK" }
       ]
@@ -37,8 +37,8 @@
     {
       "id": "expo-revenuecat",
       "name": "Expo + RevenueCat",
-      "description": "react-native-purchases for IAP & subscriptions",
-      "applyWhen": { "categories": ["mobile"], "frameworks": ["expo"] },
+      "description": "react-native-purchases for IAP & subscriptions — only if you picked the RevenueCat MCP",
+      "applyWhen": { "categories": ["mobile"], "frameworks": ["expo"], "mcps": ["revenuecat"] },
       "commands": [
         { "exec": "npx expo install react-native-purchases", "desc": "RevenueCat SDK" }
       ]
@@ -76,8 +76,8 @@
     {
       "id": "expo-better-auth",
       "name": "Better Auth on Expo",
-      "description": "Better Auth Expo plugin + Expo auth-session for OAuth",
-      "applyWhen": { "frameworks": ["expo"], "languages": ["ts"] },
+      "description": "Better Auth Expo plugin + Expo auth-session — only if you picked the Better Auth MCP",
+      "applyWhen": { "frameworks": ["expo"], "languages": ["ts"], "mcps": ["better-auth"] },
       "commands": [
         { "exec": "npm install better-auth", "desc": "Better Auth core" },
         { "exec": "npm install @better-auth/expo", "desc": "Better Auth Expo plugin" },
@@ -120,8 +120,8 @@
     {
       "id": "nextjs-better-auth",
       "name": "Next.js + Better Auth",
-      "description": "Better Auth on Next.js",
-      "applyWhen": { "frameworks": ["nextjs"], "languages": ["ts"] },
+      "description": "Better Auth on Next.js — only if you picked the Better Auth MCP",
+      "applyWhen": { "frameworks": ["nextjs"], "languages": ["ts"], "mcps": ["better-auth"] },
       "commands": [
         { "exec": "npm install better-auth", "desc": "Better Auth core" }
       ]
@@ -129,8 +129,8 @@
     {
       "id": "nextjs-stripe-web",
       "name": "Next.js + Stripe",
-      "description": "Stripe JS + Node SDK",
-      "applyWhen": { "frameworks": ["nextjs"] },
+      "description": "Stripe JS + Node SDK — only if you picked the Stripe MCP",
+      "applyWhen": { "frameworks": ["nextjs"], "mcps": ["stripe"] },
       "commands": [
         { "exec": "npm install @stripe/stripe-js", "desc": "Stripe browser SDK" },
         { "exec": "npm install stripe", "desc": "Stripe Node SDK (server)" }
@@ -282,6 +282,125 @@
       "applyWhen": { "categories": ["web", "fullstack"], "languages": ["ts"] },
       "commands": [
         { "exec": "npm init playwright@latest -- --quiet --browser=chromium --no-install --no-examples", "desc": "Playwright init" }
+      ]
+    },
+
+    {
+      "id": "cc-plugin-full-skeleton",
+      "name": "Claude plugin — full skeleton (marketplace + sample skill/agent/command)",
+      "description": "Creates .claude-plugin/marketplace.json + skills/agents/commands directories with one example each. Runs in the current directory.",
+      "applyWhen": { "categories": ["claude-plugin"], "frameworks": ["cc-plugin-full"] },
+      "commands": [
+        { "exec": "mkdir -p .claude-plugin skills agents commands hooks", "desc": "Plugin directories" },
+        {
+          "shell": true,
+          "exec": "cat > .claude-plugin/marketplace.json <<'EOF'\n{\n  \"$schema\": \"https://claude.com/schemas/marketplace.json\",\n  \"name\": \"my-plugin\",\n  \"version\": \"0.1.0\",\n  \"description\": \"\",\n  \"plugins\": []\n}\nEOF",
+          "desc": "Marketplace manifest"
+        },
+        {
+          "shell": true,
+          "exec": "mkdir -p skills/example && cat > skills/example/SKILL.md <<'EOF'\n---\nname: example\ndescription: One-line summary of what this skill does\n---\n\n# example\n\n## When to use\n\nDescribe the trigger conditions here.\n\n## How to use\n\nSteps Claude should follow.\nEOF",
+          "desc": "Sample skill stub"
+        },
+        {
+          "shell": true,
+          "exec": "cat > agents/example.md <<'EOF'\n---\nname: example\ndescription: One-line summary of what this subagent does\n---\n\nYou are a focused subagent that…\nEOF",
+          "desc": "Sample agent stub"
+        },
+        {
+          "shell": true,
+          "exec": "cat > commands/example.md <<'EOF'\n---\nname: example\ndescription: One-line description shown in /help\n---\n\nWhen the user invokes /example, do …\nEOF",
+          "desc": "Sample slash command stub"
+        }
+      ]
+    },
+    {
+      "id": "cc-skill-only-skeleton",
+      "name": "Claude plugin — single skill skeleton",
+      "description": "Creates skills/<your-skill>/SKILL.md with the standard frontmatter.",
+      "applyWhen": { "categories": ["claude-plugin"], "frameworks": ["cc-skill"] },
+      "commands": [
+        { "exec": "mkdir -p skills/example", "desc": "Skill directory" },
+        {
+          "shell": true,
+          "exec": "cat > skills/example/SKILL.md <<'EOF'\n---\nname: example\ndescription: One-line summary used by Claude to decide when to load this skill\n---\n\n# example\n\n## When to use\n\nDescribe when Claude should load this skill.\n\n## How to use\n\nInstructions for Claude.\nEOF",
+          "desc": "Skill stub"
+        }
+      ]
+    },
+    {
+      "id": "cc-agent-only-skeleton",
+      "name": "Claude plugin — single subagent skeleton",
+      "description": "Creates agents/<your-agent>.md with standard frontmatter.",
+      "applyWhen": { "categories": ["claude-plugin"], "frameworks": ["cc-agent"] },
+      "commands": [
+        { "exec": "mkdir -p agents", "desc": "Agents directory" },
+        {
+          "shell": true,
+          "exec": "cat > agents/example.md <<'EOF'\n---\nname: example\ndescription: One-line summary of what this subagent does\n---\n\nYou are a focused subagent that…\nEOF",
+          "desc": "Agent stub"
+        }
+      ]
+    },
+    {
+      "id": "cc-command-only-skeleton",
+      "name": "Claude plugin — single slash command skeleton",
+      "description": "Creates commands/<your-command>.md.",
+      "applyWhen": { "categories": ["claude-plugin"], "frameworks": ["cc-command"] },
+      "commands": [
+        { "exec": "mkdir -p commands", "desc": "Commands directory" },
+        {
+          "shell": true,
+          "exec": "cat > commands/example.md <<'EOF'\n---\nname: example\ndescription: One-line description shown in /help\n---\n\nWhen the user invokes /example, do …\nEOF",
+          "desc": "Slash command stub"
+        }
+      ]
+    },
+    {
+      "id": "cc-mcp-ts-skeleton",
+      "name": "Claude plugin — MCP server (TypeScript)",
+      "description": "Scaffold a minimal TypeScript MCP server (stdio) with @modelcontextprotocol/sdk.",
+      "applyWhen": { "categories": ["claude-plugin"], "frameworks": ["cc-mcp-ts"] },
+      "commands": [
+        { "exec": "npm init -y", "desc": "package.json" },
+        { "exec": "npm install @modelcontextprotocol/sdk zod", "desc": "MCP SDK + zod" },
+        { "exec": "npm install -D typescript tsx @types/node", "desc": "TS toolchain" },
+        { "exec": "npx tsc --init --module nodenext --moduleResolution nodenext --target es2022 --outDir dist --rootDir src", "desc": "tsconfig.json" },
+        { "exec": "mkdir -p src", "desc": "src/" },
+        {
+          "shell": true,
+          "exec": "cat > src/index.ts <<'EOF'\nimport { Server } from \"@modelcontextprotocol/sdk/server/index.js\";\nimport { StdioServerTransport } from \"@modelcontextprotocol/sdk/server/stdio.js\";\n\nconst server = new Server(\n  { name: \"my-mcp\", version: \"0.1.0\" },\n  { capabilities: { tools: {} } }\n);\n\n// TODO: register tools / resources / prompts here.\n\nconst transport = new StdioServerTransport();\nawait server.connect(transport);\nEOF",
+          "desc": "Sample MCP server entry"
+        }
+      ]
+    },
+    {
+      "id": "cc-mcp-py-skeleton",
+      "name": "Claude plugin — MCP server (Python)",
+      "description": "Scaffold a Python MCP server with uv + the official mcp package.",
+      "applyWhen": { "categories": ["claude-plugin"], "frameworks": ["cc-mcp-py"] },
+      "commands": [
+        { "exec": "uv init", "desc": "uv project" },
+        { "exec": "uv add mcp", "desc": "MCP Python SDK" },
+        {
+          "shell": true,
+          "exec": "cat > main.py <<'EOF'\nfrom mcp.server.fastmcp import FastMCP\n\nmcp = FastMCP(\"my-mcp\")\n\n# TODO: @mcp.tool() / @mcp.resource() / @mcp.prompt() here.\n\nif __name__ == \"__main__\":\n    mcp.run()\nEOF",
+          "desc": "Sample MCP server entry"
+        }
+      ]
+    },
+    {
+      "id": "cc-hook-bash-skeleton",
+      "name": "Claude plugin — Bash hook script",
+      "description": "Drop a runnable Bash hook into hooks/ + ready-to-paste settings.json snippet.",
+      "applyWhen": { "categories": ["claude-plugin"], "frameworks": ["cc-hook-bash"] },
+      "commands": [
+        { "exec": "mkdir -p hooks", "desc": "hooks/" },
+        {
+          "shell": true,
+          "exec": "cat > hooks/example.sh <<'EOF'\n#!/usr/bin/env bash\n# Example Claude Code hook — reads JSON from stdin, exits 0 to allow.\nset -euo pipefail\nINPUT=$(cat)\n# Inspect $INPUT, make a decision.\nexit 0\nEOF\nchmod +x hooks/example.sh",
+          "desc": "Hook script"
+        }
       ]
     }
   ]

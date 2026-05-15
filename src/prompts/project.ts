@@ -115,7 +115,7 @@ export async function askProject(
   const mcp = await askMcp(funnel);
   if (mcp === null) return null;
 
-  const commandBundles = await askCommandBundles(funnel);
+  const commandBundles = await askCommandBundles(funnel, mcp.servers);
   if (commandBundles === null) return null;
 
   return {
