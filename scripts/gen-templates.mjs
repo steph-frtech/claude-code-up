@@ -57,6 +57,9 @@ const SHELL_SOURCES = [
   const scaffolders = JSON.parse(
     await readFile(path.join(root, "catalog/scaffolders.json"), "utf8"),
   );
+  const commandBundles = JSON.parse(
+    await readFile(path.join(root, "catalog/command-bundles.json"), "utf8"),
+  );
 
   // Tiny consistency checks.
   const requireArray = (val, name) => {
@@ -74,6 +77,14 @@ const SHELL_SOURCES = [
   requireArray(itemsSuperpowers.items, "items/superpowers.json.items");
   requireArray(itemsPocock.items, "items/pocock.json.items");
   requireArray(scaffolders.scaffolders, "scaffolders.json.scaffolders");
+  requireArray(commandBundles.bundles, "command-bundles.json.bundles");
+  for (const b of commandBundles.bundles) {
+    if (!b.id || !b.commands) throw new Error(`command-bundle missing id/commands: ${JSON.stringify(b).slice(0, 80)}`);
+    if (!Array.isArray(b.commands)) throw new Error(`command-bundle.commands must be array: ${b.id}`);
+    for (const c of b.commands) {
+      if (!c.exec) throw new Error(`command-bundle ${b.id} has command without exec: ${JSON.stringify(c).slice(0, 80)}`);
+    }
+  }
 
   // Validate items: every item has a tier; skip has reason; default has no applyWhen.
   const validateItems = (sourceName, items) => {
@@ -200,7 +211,23 @@ const SHELL_SOURCES = [
     "  args: string[];\n" +
     "  matchFrameworks: string[];\n" +
     "}\n" +
-    `export const SCAFFOLDERS: ReadonlyArray<ScaffolderRaw> = ${JSON.stringify(scaffolders.scaffolders, null, 2)};\n`;
+    `export const SCAFFOLDERS: ReadonlyArray<ScaffolderRaw> = ${JSON.stringify(scaffolders.scaffolders, null, 2)};\n` +
+    "\n" +
+    "export interface CommandBundleCommand { exec: string; desc?: string }\n" +
+    "export interface CommandBundleRaw {\n" +
+    "  id: string;\n" +
+    "  name: string;\n" +
+    "  description?: string;\n" +
+    "  applyWhen?: {\n" +
+    "    categories?: string[];\n" +
+    "    languages?: string[];\n" +
+    "    frameworks?: string[];\n" +
+    "    databases?: string[];\n" +
+    "    orms?: string[];\n" +
+    "  };\n" +
+    "  commands: CommandBundleCommand[];\n" +
+    "}\n" +
+    `export const COMMAND_BUNDLES: ReadonlyArray<CommandBundleRaw> = ${JSON.stringify(commandBundles.bundles, null, 2)};\n`;
 
   const dest = path.join(root, "src/catalog.gen.ts");
   await writeFile(dest, out, "utf8");

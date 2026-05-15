@@ -28,7 +28,7 @@ export async function askScaffolder(
     label: `${s.name}  ${pc.dim(`(${s.command} ${s.args.slice(0, 3).join(" ")}${s.args.length > 3 ? "…" : ""})`)}`,
     hint: s.description,
   }));
-  opts.push({ value: "__skip__", label: "Skip — don't scaffold (just ccup config)", hint: "" });
+  opts.push({ value: "__skip__", label: "Skip — don't scaffold (just claude-code-up config)", hint: "" });
 
   const choice = await p.select<string>({
     message: `Scaffold a starter app for ${funnel?.frameworks.join(" / ")} in this directory?`,

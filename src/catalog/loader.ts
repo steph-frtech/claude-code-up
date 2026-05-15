@@ -14,6 +14,7 @@ export {
   SUPERPOWERS_ITEMS,
   POCOCK_ITEMS,
   SCAFFOLDERS,
+  COMMAND_BUNDLES,
 } from "../catalog.gen.js";
 export type {
   FunnelOption,
@@ -23,4 +24,6 @@ export type {
   CuratedSkillRaw,
   CatalogItemRaw,
   ScaffolderRaw,
+  CommandBundleRaw,
+  CommandBundleCommand,
 } from "../catalog.gen.js";

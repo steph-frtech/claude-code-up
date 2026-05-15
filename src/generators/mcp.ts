@@ -63,6 +63,16 @@ export async function applyMcp(opts: {
 
   const verifications = await verifyServers(defs, mergedEnvVars);
 
+  // Persist the verification snapshot so the statusline can show MCP health.
+  const statusPath = path.join(opts.targetPath, ".claude", "mcp-status.json");
+  const statusSnapshot = {
+    verifiedAt: new Date().toISOString(),
+    servers: Object.fromEntries(
+      verifications.map((v) => [v.server, v.status]),
+    ),
+  };
+  await writeFile(statusPath, JSON.stringify(statusSnapshot, null, 2) + "\n", "utf8");
+
   return {
     written: true,
     serverCount: opts.servers.length,
@@ -323,7 +333,7 @@ async function smokeTest(
       params: {
         protocolVersion: "2024-11-05",
         capabilities: {},
-        clientInfo: { name: "ccup", version: "0.1.0" },
+        clientInfo: { name: "claude-code-up", version: "0.1.0" },
       },
     });
   });

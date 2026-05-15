@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project: {{projectName}}
 
-This project was initialized with \`ccup\`. Expand this file with:
+This project was initialized with \`claude-code-up\`. Expand this file with:
 
 - **Common commands** — how to build, run, test, and lint the project, plus how to run a single test.
 - **Architecture** — the big-picture structure (entry points, major modules, how data flows).
@@ -30,7 +30,7 @@ dist/
 `;
 
 export const AUDIT_SH = `#!/usr/bin/env bash
-# ccup-generated security audit script.
+# claude-code-up-generated security audit script.
 # Scans this project's .claude/ directory using agentshield CLI.
 # Source: https://github.com/affaan-m/agentshield
 set -euo pipefail

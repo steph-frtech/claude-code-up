@@ -41,7 +41,7 @@ export function renderStackMd(report: StackReport): string {
   }
 
   if (userComps.length > 0) {
-    lines.push("## To install yourself (user-scope, not run by ccup)");
+    lines.push("## To install yourself (user-scope, not run by claude-code-up)");
     lines.push("");
     for (const c of userComps) {
       lines.push(`### ${c.name}`);

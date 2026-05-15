@@ -111,12 +111,17 @@ export interface ScaffolderAnswer {
   args: string[];
 }
 
+export interface CommandBundlesAnswer {
+  bundleIds: string[];
+}
+
 export interface ProjectAnswers {
   name: string;
   dir: string;
   initGit: boolean;
   funnel?: import("./prompts/funnel.js").FunnelAnswers;
   scaffolder?: ScaffolderAnswer;
+  commandBundles?: CommandBundlesAnswer;
   github?: GitHubAnswers;
   stack?: StackAnswers;
   mcp?: McpAnswers;

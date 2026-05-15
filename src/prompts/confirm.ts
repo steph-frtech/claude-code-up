@@ -7,7 +7,9 @@ import type {
   WipeMode,
   FunnelAnswers,
   ScaffolderAnswer,
+  CommandBundlesAnswer,
 } from "../types.js";
+import { COMMAND_BUNDLES } from "../catalog/loader.js";
 import { findComponent } from "../stack/manifest.js";
 import { findMcpServer } from "../stack/mcp-catalog.js";
 
@@ -20,6 +22,7 @@ export interface ConfirmPlanOptions {
   github?: GitHubAnswers;
   stack?: StackAnswers;
   mcp?: McpAnswers;
+  commandBundles?: CommandBundlesAnswer;
   wipeMode?: WipeMode;
   existingEntries?: number;
 }
@@ -54,7 +57,7 @@ export async function confirmPlan(opts: ConfirmPlanOptions): Promise<boolean> {
     lines.push("");
     lines.push(
       `${pc.bgYellow(pc.black(pc.bold(" MERGE ")))} ${pc.yellow(
-        `Will overlay ccup config on ${opts.existingEntries} existing entries (preserves CLAUDE.md and .gitignore if they exist).`,
+        `Will overlay claude-code-up config on ${opts.existingEntries} existing entries (preserves CLAUDE.md and .gitignore if they exist).`,
       )}`,
     );
   }
@@ -161,6 +164,21 @@ export async function confirmPlan(opts: ConfirmPlanOptions): Promise<boolean> {
         tag = ` ${pc.green(`[creds set]`)}`;
       }
       lines.push(`  ${marker} ${def.name}${tag}`);
+    }
+  }
+
+  if (opts.commandBundles && opts.commandBundles.bundleIds.length > 0) {
+    const total = opts.commandBundles.bundleIds.reduce((sum, id) => {
+      const b = COMMAND_BUNDLES.find((x) => x.id === id);
+      return sum + (b?.commands.length ?? 0);
+    }, 0);
+    lines.push("");
+    lines.push(
+      `${pc.bold("Command bundles:")} ${opts.commandBundles.bundleIds.length} selected ${pc.dim(`(${total} commands total)`)}`,
+    );
+    for (const id of opts.commandBundles.bundleIds) {
+      const b = COMMAND_BUNDLES.find((x) => x.id === id);
+      if (b) lines.push(`  ${pc.green("●")} ${b.name} ${pc.dim(`(${b.commands.length} cmds)`)}`);
     }
   }
 

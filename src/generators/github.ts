@@ -43,7 +43,7 @@ export async function pushToGitHub(opts: {
 
   const commitMsg =
     opts.github.mode === "clone-existing"
-      ? "Add ccup config and Claude stack"
+      ? "Add claude-code-up config and Claude stack"
       : "Initial commit";
 
   try {

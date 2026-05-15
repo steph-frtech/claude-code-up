@@ -6,8 +6,8 @@ const args = process.argv.slice(2);
 
 if (args.includes("--help") || args.includes("-h")) {
   process.stdout.write(
-    `ccup ${VERSION} — Claude Code Up\n\n` +
-      `Usage: ccup [dir] [--force]\n\n` +
+    `claude-code-up ${VERSION} — Claude Code Up\n\n` +
+      `Usage: claude-code-up [dir] [--force]\n\n` +
       `Initialize a new project pre-configured for Claude Code.\n\n` +
       `Options:\n` +
       `  --force, -f    Allow non-empty target directory\n` +

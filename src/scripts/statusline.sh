@@ -106,3 +106,48 @@ limit_block seven_day_sonnet "✨" "Sonnet 7d"
 
 printf " \033[1;97;46m ✏️  +%d/-%d \033[0m${warn}  \033[1;97;42m 📁 %s \033[0m" \
   "$added" "$removed" "$dir"
+
+# ── 3. ccup inventory line (skills/agents/MCPs/hooks/commands) ──────────────
+# Reads .claude/stack.json + .mcp.json + .claude/mcp-status.json for live
+# project state. Silent fallback if any are missing.
+stack_json="$dir/.claude/stack.json"
+mcp_json="$dir/.mcp.json"
+mcp_status="$dir/.claude/mcp-status.json"
+settings_json="$dir/.claude/settings.json"
+
+if [ -f "$stack_json" ] || [ -f "$mcp_json" ] || [ -f "$settings_json" ]; then
+  cc_skills=0; cc_agents=0; cc_commands=0; cc_scripts=0; cc_hooks=0
+  cc_mcp_total=0; cc_mcp_ok=0
+  if [ -f "$stack_json" ]; then
+    cc_skills=$(jq -r '.totals.project.skills // 0' "$stack_json" 2>/dev/null || echo 0)
+    cc_agents=$(jq -r '.totals.project.agents // 0' "$stack_json" 2>/dev/null || echo 0)
+    cc_commands=$(jq -r '.totals.project.commands // 0' "$stack_json" 2>/dev/null || echo 0)
+    cc_scripts=$(jq -r '.totals.project.scripts // 0' "$stack_json" 2>/dev/null || echo 0)
+    cc_hooks=$(jq -r '.totals.project.hooks // 0' "$stack_json" 2>/dev/null || echo 0)
+  fi
+  if [ -f "$mcp_json" ]; then
+    cc_mcp_total=$(jq -r '.mcpServers // {} | keys | length' "$mcp_json" 2>/dev/null || echo 0)
+  fi
+  if [ -f "$mcp_status" ]; then
+    cc_mcp_ok=$(jq -r '[(.servers // {}) | to_entries[] | select(.value=="ok")] | length' "$mcp_status" 2>/dev/null || echo 0)
+  fi
+
+  # MCP marker color based on health
+  if [ "$cc_mcp_total" -eq 0 ]; then
+    mcp_block="\033[1;97;48;5;238m 🔌 0 MCPs \033[0m"
+  elif [ "$cc_mcp_ok" -eq "$cc_mcp_total" ]; then
+    mcp_block="\033[1;97;42m 🔌 ${cc_mcp_ok}/${cc_mcp_total} MCPs ✓ \033[0m"
+  elif [ "$cc_mcp_ok" -eq 0 ]; then
+    mcp_block="\033[1;97;41m 🔌 0/${cc_mcp_total} MCPs ✗ \033[0m"
+  else
+    mcp_block="\033[1;30;43m 🔌 ${cc_mcp_ok}/${cc_mcp_total} MCPs ⚠ \033[0m"
+  fi
+
+  printf "\n"
+  printf "\033[1;97;48;5;238m 📦 %s skills \033[0m " "$cc_skills"
+  printf "\033[1;97;48;5;238m 🤖 %s agents \033[0m " "$cc_agents"
+  printf "%b " "$mcp_block"
+  printf "\033[1;97;48;5;238m 🪝 %s hooks \033[0m " "$cc_hooks"
+  printf "\033[1;97;48;5;238m ⚡ %s commands \033[0m " "$cc_commands"
+  printf "\033[1;97;48;5;238m 📜 %s scripts \033[0m" "$cc_scripts"
+fi

@@ -146,7 +146,7 @@
       "id": "scaffold-exercises",
       "kind": "skill",
       "tier": "skip",
-      "reason": "For training material, out of scope for ccup"
+      "reason": "For training material, out of scope for claude-code-up"
     }
   ]
 }

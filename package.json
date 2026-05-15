@@ -1,5 +1,5 @@
 {
-  "name": "ccup",
+  "name": "claude-code-up",
   "version": "0.1.0",
   "description": "Bootstrap a Claude Code project with the right agents, skills, MCPs, hooks, scaffolders — JSON-driven decision tree, project-scope, e2e verified.",
   "keywords": [
@@ -16,19 +16,19 @@
     "wshobson",
     "superpowers"
   ],
-  "homepage": "https://github.com/steph-frtech/ccup#readme",
+  "homepage": "https://github.com/steph-frtech/claude-code-up#readme",
   "bugs": {
-    "url": "https://github.com/steph-frtech/ccup/issues"
+    "url": "https://github.com/steph-frtech/claude-code-up/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/steph-frtech/ccup.git"
+    "url": "git+https://github.com/steph-frtech/claude-code-up.git"
   },
   "license": "MIT",
   "author": "steph-frtech",
   "type": "module",
   "bin": {
-    "ccup": "./dist/cli.js"
+    "claude-code-up": "dist/cli.js"
   },
   "files": [
     "dist",

@@ -1,0 +1,288 @@
+{
+  "schemaVersion": "1",
+  "bundles": [
+    {
+      "id": "expo-core-extras",
+      "name": "Expo core extras",
+      "description": "Router, constants, splash, status bar — the basics every Expo app needs",
+      "applyWhen": { "frameworks": ["expo"] },
+      "commands": [
+        { "exec": "npx expo install expo-router", "desc": "File-based routing" },
+        { "exec": "npx expo install expo-constants", "desc": "App constants & manifest access" },
+        { "exec": "npx expo install expo-status-bar", "desc": "Status bar control" },
+        { "exec": "npx expo install expo-splash-screen", "desc": "Splash screen control" },
+        { "exec": "npx expo install expo-linking", "desc": "Deep linking" }
+      ]
+    },
+    {
+      "id": "expo-supabase-libs",
+      "name": "Expo + Supabase libs",
+      "description": "Supabase JS client + secure token storage",
+      "applyWhen": { "frameworks": ["expo"], "databases": ["supabase"] },
+      "commands": [
+        { "exec": "npx expo install @supabase/supabase-js", "desc": "Supabase client" },
+        { "exec": "npx expo install expo-secure-store", "desc": "Secure token storage" },
+        { "exec": "npx expo install @react-native-async-storage/async-storage", "desc": "Async storage backing for Supabase auth" }
+      ]
+    },
+    {
+      "id": "expo-stripe-rn",
+      "name": "Expo + Stripe (React Native SDK)",
+      "description": "Stripe React Native payments SDK",
+      "applyWhen": { "frameworks": ["expo"] },
+      "commands": [
+        { "exec": "npm install @stripe/stripe-react-native", "desc": "Stripe RN SDK" }
+      ]
+    },
+    {
+      "id": "expo-revenuecat",
+      "name": "Expo + RevenueCat",
+      "description": "react-native-purchases for IAP & subscriptions",
+      "applyWhen": { "categories": ["mobile"], "frameworks": ["expo"] },
+      "commands": [
+        { "exec": "npx expo install react-native-purchases", "desc": "RevenueCat SDK" }
+      ]
+    },
+    {
+      "id": "expo-state-zustand",
+      "name": "Expo state (Zustand)",
+      "description": "Zustand client-side state",
+      "applyWhen": { "frameworks": ["expo"] },
+      "commands": [
+        { "exec": "npm install zustand", "desc": "Zustand store" }
+      ]
+    },
+    {
+      "id": "expo-forms-libs",
+      "name": "Expo forms (react-hook-form + zod)",
+      "description": "Schema-validated forms",
+      "applyWhen": { "frameworks": ["expo"] },
+      "commands": [
+        { "exec": "npm install react-hook-form", "desc": "Form state" },
+        { "exec": "npm install zod", "desc": "Schema validation" },
+        { "exec": "npm install @hookform/resolvers", "desc": "rhf <-> zod bridge" }
+      ]
+    },
+    {
+      "id": "expo-icons-libs",
+      "name": "Expo icons (lucide + Expo vector)",
+      "description": "Icon libraries",
+      "applyWhen": { "frameworks": ["expo"] },
+      "commands": [
+        { "exec": "npm install lucide-react-native", "desc": "Lucide RN icons" },
+        { "exec": "npx expo install react-native-svg", "desc": "SVG support (peer dep)" }
+      ]
+    },
+    {
+      "id": "expo-better-auth",
+      "name": "Better Auth on Expo",
+      "description": "Better Auth Expo plugin + Expo auth-session for OAuth",
+      "applyWhen": { "frameworks": ["expo"], "languages": ["ts"] },
+      "commands": [
+        { "exec": "npm install better-auth", "desc": "Better Auth core" },
+        { "exec": "npm install @better-auth/expo", "desc": "Better Auth Expo plugin" },
+        { "exec": "npx expo install expo-auth-session", "desc": "OAuth handling" },
+        { "exec": "npx expo install expo-web-browser", "desc": "OAuth redirect handler" }
+      ]
+    },
+
+    {
+      "id": "nextjs-tanstack",
+      "name": "Next.js + TanStack Query",
+      "description": "Server state management",
+      "applyWhen": { "frameworks": ["nextjs"] },
+      "commands": [
+        { "exec": "npm install @tanstack/react-query", "desc": "TanStack Query" },
+        { "exec": "npm install @tanstack/react-query-devtools", "desc": "Devtools" }
+      ]
+    },
+    {
+      "id": "nextjs-prisma-postgres",
+      "name": "Next.js + Prisma + Postgres",
+      "description": "Prisma ORM with Postgres",
+      "applyWhen": { "frameworks": ["nextjs"], "orms": ["prisma"] },
+      "commands": [
+        { "exec": "npm install -D prisma", "desc": "Prisma CLI" },
+        { "exec": "npm install @prisma/client", "desc": "Prisma client" },
+        { "exec": "npx prisma init --datasource-provider postgresql", "desc": "Init schema" }
+      ]
+    },
+    {
+      "id": "nextjs-drizzle-postgres",
+      "name": "Next.js + Drizzle + Postgres",
+      "description": "Drizzle ORM with Postgres",
+      "applyWhen": { "frameworks": ["nextjs"], "orms": ["drizzle"] },
+      "commands": [
+        { "exec": "npm install drizzle-orm postgres", "desc": "Drizzle + pg client" },
+        { "exec": "npm install -D drizzle-kit", "desc": "Drizzle CLI" }
+      ]
+    },
+    {
+      "id": "nextjs-better-auth",
+      "name": "Next.js + Better Auth",
+      "description": "Better Auth on Next.js",
+      "applyWhen": { "frameworks": ["nextjs"], "languages": ["ts"] },
+      "commands": [
+        { "exec": "npm install better-auth", "desc": "Better Auth core" }
+      ]
+    },
+    {
+      "id": "nextjs-stripe-web",
+      "name": "Next.js + Stripe",
+      "description": "Stripe JS + Node SDK",
+      "applyWhen": { "frameworks": ["nextjs"] },
+      "commands": [
+        { "exec": "npm install @stripe/stripe-js", "desc": "Stripe browser SDK" },
+        { "exec": "npm install stripe", "desc": "Stripe Node SDK (server)" }
+      ]
+    },
+    {
+      "id": "nextjs-trpc",
+      "name": "Next.js + tRPC",
+      "description": "End-to-end typesafe APIs",
+      "applyWhen": { "frameworks": ["nextjs"], "languages": ["ts"] },
+      "commands": [
+        { "exec": "npm install @trpc/server @trpc/client @trpc/react-query @trpc/next", "desc": "tRPC core packages" }
+      ]
+    },
+    {
+      "id": "nextjs-shadcn",
+      "name": "Next.js + shadcn/ui",
+      "description": "shadcn/ui init (Tailwind comes with create-next-app)",
+      "applyWhen": { "frameworks": ["nextjs"] },
+      "commands": [
+        { "exec": "npx shadcn@latest init --yes --defaults", "desc": "shadcn init" }
+      ]
+    },
+
+    {
+      "id": "vite-react-tailwind",
+      "name": "Vite + React + Tailwind",
+      "description": "Tailwind on Vite",
+      "applyWhen": { "frameworks": ["react-vite"] },
+      "commands": [
+        { "exec": "npm install -D tailwindcss postcss autoprefixer", "desc": "Tailwind + PostCSS" },
+        { "exec": "npx tailwindcss init -p", "desc": "Generate config files" }
+      ]
+    },
+    {
+      "id": "vite-vitest",
+      "name": "Vite + Vitest + Testing Library",
+      "description": "Test runner + React Testing Library",
+      "applyWhen": { "frameworks": ["react-vite"] },
+      "commands": [
+        { "exec": "npm install -D vitest @testing-library/react @testing-library/jest-dom jsdom", "desc": "Vitest stack" }
+      ]
+    },
+
+    {
+      "id": "node-zod-validation",
+      "name": "Zod validation",
+      "description": "Schema validation",
+      "applyWhen": { "languages": ["ts"], "categories": ["backend", "fullstack", "web", "mobile"] },
+      "commands": [
+        { "exec": "npm install zod", "desc": "Zod" }
+      ]
+    },
+    {
+      "id": "node-pino-logging",
+      "name": "Pino logging",
+      "description": "Structured logger",
+      "applyWhen": { "languages": ["ts"], "categories": ["backend", "fullstack"] },
+      "commands": [
+        { "exec": "npm install pino pino-http", "desc": "Pino + HTTP middleware" },
+        { "exec": "npm install -D pino-pretty", "desc": "Dev pretty printing" }
+      ]
+    },
+    {
+      "id": "node-test-vitest",
+      "name": "Vitest for Node backends",
+      "description": "Vitest + supertest",
+      "applyWhen": { "languages": ["ts"], "categories": ["backend", "fullstack"] },
+      "commands": [
+        { "exec": "npm install -D vitest supertest @types/supertest", "desc": "Vitest + supertest" }
+      ]
+    },
+    {
+      "id": "node-prisma-postgres",
+      "name": "Node Prisma + Postgres (non-Next)",
+      "description": "For Express/Fastify/Hono/NestJS",
+      "applyWhen": { "languages": ["ts"], "categories": ["backend"], "orms": ["prisma"] },
+      "commands": [
+        { "exec": "npm install -D prisma", "desc": "Prisma CLI" },
+        { "exec": "npm install @prisma/client", "desc": "Prisma client" },
+        { "exec": "npx prisma init --datasource-provider postgresql", "desc": "Init schema" }
+      ]
+    },
+
+    {
+      "id": "py-fastapi-essentials",
+      "name": "FastAPI essentials",
+      "description": "FastAPI + Pydantic settings + pytest + httpx (uv-based)",
+      "applyWhen": { "frameworks": ["fastapi"] },
+      "commands": [
+        { "exec": "uv add 'fastapi[standard]'", "desc": "FastAPI with all extras" },
+        { "exec": "uv add pydantic-settings", "desc": "Settings management" },
+        { "exec": "uv add --dev pytest httpx", "desc": "Testing stack" }
+      ]
+    },
+    {
+      "id": "py-sqlalchemy-alembic",
+      "name": "SQLAlchemy + Alembic (Postgres)",
+      "description": "ORM + migrations",
+      "applyWhen": { "languages": ["py"], "orms": ["sqlalchemy"] },
+      "commands": [
+        { "exec": "uv add sqlalchemy alembic psycopg[binary]", "desc": "SQLAlchemy + Alembic + Postgres driver" },
+        { "exec": "uv run alembic init alembic", "desc": "Init Alembic" }
+      ]
+    },
+    {
+      "id": "py-django-essentials",
+      "name": "Django essentials",
+      "description": "Django + DRF + Postgres driver",
+      "applyWhen": { "frameworks": ["django"] },
+      "commands": [
+        { "exec": "uv add django djangorestframework psycopg[binary] python-decouple", "desc": "Django stack" }
+      ]
+    },
+
+    {
+      "id": "prettier-eslint-ts",
+      "name": "Prettier + ESLint (TS)",
+      "description": "Prettier + ESLint with TS support",
+      "applyWhen": { "languages": ["ts"] },
+      "commands": [
+        { "exec": "npm install -D prettier eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-config-prettier", "desc": "Prettier + ESLint + TS plugins" }
+      ]
+    },
+    {
+      "id": "biome-ts",
+      "name": "Biome (Prettier + ESLint alternative)",
+      "description": "Single Rust-based formatter+linter",
+      "applyWhen": { "languages": ["ts"] },
+      "commands": [
+        { "exec": "npm install -D --save-exact @biomejs/biome", "desc": "Biome" },
+        { "exec": "npx @biomejs/biome init", "desc": "Init config" }
+      ]
+    },
+    {
+      "id": "husky-lint-staged",
+      "name": "Husky + lint-staged",
+      "description": "Pre-commit hooks",
+      "applyWhen": { "languages": ["ts"] },
+      "commands": [
+        { "exec": "npm install -D husky lint-staged", "desc": "Husky + lint-staged" },
+        { "exec": "npx husky init", "desc": "Init Husky" }
+      ]
+    },
+    {
+      "id": "playwright-tests",
+      "name": "Playwright e2e",
+      "description": "End-to-end browser testing",
+      "applyWhen": { "categories": ["web", "fullstack"], "languages": ["ts"] },
+      "commands": [
+        { "exec": "npm init playwright@latest -- --quiet --browser=chromium --no-install --no-examples", "desc": "Playwright init" }
+      ]
+    }
+  ]
+}

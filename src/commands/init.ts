@@ -14,6 +14,7 @@ import { initGit } from "../generators/git.js";
 import { pushToGitHub, cloneFromGitHub } from "../generators/github.js";
 import { applyStack } from "../generators/stack.js";
 import { applyMcp } from "../generators/mcp.js";
+import { applyCommandBundles } from "../generators/command-bundles.js";
 import { getKarpathyClaudeMd } from "../stack/karpathy.js";
 import { summarizeTotals } from "../stack/render.js";
 
@@ -134,7 +135,7 @@ async function runClaudeDoctorInteractive(
 }
 
 export async function init(opts: InitOptions): Promise<void> {
-  p.intro(`${pc.bgCyan(pc.black(" ccup "))} ${pc.cyan("Claude Code Up")}`);
+  p.intro(`${pc.bgCyan(pc.black(" claude-code-up "))} ${pc.cyan("Claude Code Up")}`);
 
   await preflightClaudeCode();
 
@@ -159,6 +160,7 @@ export async function init(opts: InitOptions): Promise<void> {
     github: answers.github,
     stack: answers.stack,
     mcp: answers.mcp,
+    commandBundles: answers.commandBundles,
     wipeMode: answers.wipeMode,
     existingEntries: answers.existingEntries,
   });
@@ -205,7 +207,7 @@ export async function init(opts: InitOptions): Promise<void> {
       scaffolderRan = true;
     } catch (err) {
       p.log.warn(
-        `Scaffolder exited with error — continuing with ccup config anyway. (${(err as Error).message.slice(0, 120)})`,
+        `Scaffolder exited with error — continuing with claude-code-up config anyway. (${(err as Error).message.slice(0, 120)})`,
       );
     }
   }
@@ -286,6 +288,17 @@ export async function init(opts: InitOptions): Promise<void> {
     }
   }
 
+  let bundleResults: Awaited<ReturnType<typeof applyCommandBundles>> = [];
+  if (answers.commandBundles && answers.commandBundles.bundleIds.length > 0) {
+    p.log.step(
+      `Running ${answers.commandBundles.bundleIds.length} command bundle(s) in ${path.relative(process.cwd(), targetPath) || "."}`,
+    );
+    bundleResults = await applyCommandBundles({
+      targetPath,
+      bundleIds: answers.commandBundles.bundleIds,
+    });
+  }
+
   if (answers.initGit && answers.github?.mode !== "clone-existing") {
     s.start("Initializing git repository");
     await initGit({ targetPath });
@@ -345,7 +358,7 @@ export async function init(opts: InitOptions): Promise<void> {
     }
     if (mcpResult.envFileWritten) {
       summary.push(
-        pc.dim("ccup loaded .env automatically for the verification and the claude launch below."),
+        pc.dim("claude-code-up loaded .env automatically for the verification and the claude launch below."),
       );
       summary.push(
         pc.dim("For future shell sessions, source .env yourself (or use direnv / a launcher)."),
@@ -416,7 +429,7 @@ export async function init(opts: InitOptions): Promise<void> {
     }
   }
 
-  // ccup-side diagnostic summary (we already verified everything during generation).
+  // claude-code-up-side diagnostic summary (we already verified everything during generation).
   const ccupDiag: string[] = [];
   if (stackReport) {
     const projectComps = stackReport.components.filter((c) => c.scope === "project");
@@ -445,7 +458,7 @@ export async function init(opts: InitOptions): Promise<void> {
     }
   }
   if (ccupDiag.length > 0) {
-    p.note(ccupDiag.join("\n"), "ccup diagnostic");
+    p.note(ccupDiag.join("\n"), "claude-code-up diagnostic");
   }
 
   // Offer the official Claude Code doctor (interactive panel, needs TTY).

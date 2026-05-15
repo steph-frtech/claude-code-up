@@ -64,7 +64,7 @@ export async function askGitHub(
 
     if (exists) {
       const useExisting = await p.confirm({
-        message: `${pc.cyan(`${owner}/${repoName}`)} already exists. Clone it and add ccup config on top?`,
+        message: `${pc.cyan(`${owner}/${repoName}`)} already exists. Clone it and add claude-code-up config on top?`,
         initialValue: true,
       });
       if (p.isCancel(useExisting)) return null;

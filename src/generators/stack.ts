@@ -415,7 +415,7 @@ export async function applyStack(
 
   const stackReport: StackReport = {
     version: "1",
-    createdBy: `ccup@${CCUP_VERSION}`,
+    createdBy: `claude-code-up@${CCUP_VERSION}`,
     createdAt: new Date().toISOString(),
     components: reports,
     totals,

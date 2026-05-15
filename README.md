@@ -1,8 +1,8 @@
-# ccup — Claude Code Up
+# claude-code-up — Claude Code Up
 
 > The fastest way to bootstrap a Claude Code project with the **right** skills, agents, MCPs, and hooks — pre-curated, project-scope only, fully JSON-driven.
 
-[![npm](https://img.shields.io/badge/npm-coming%20soon-orange.svg)](https://github.com/steph-frtech/ccup)
+[![npm](https://img.shields.io/badge/npm-coming%20soon-orange.svg)](https://github.com/steph-frtech/claude-code-up)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Node ≥18](https://img.shields.io/badge/node-%E2%89%A518-brightgreen.svg)](#requirements)
 [![Claude Code ≥2.1.32](https://img.shields.io/badge/Claude%20Code-%E2%89%A52.1.32-purple.svg)](https://claude.com/claude-code)
@@ -11,7 +11,7 @@
 ---
 
 ```sh
-npx ccup
+npx claude-code-up
 ```
 
 That's it. One command. Interactive prompts. Your project is ready to ship — with battle-tested agents, the right MCPs, runtime hooks, a working statusline, and the scaffolding for your stack.
@@ -20,7 +20,7 @@ That's it. One command. Interactive prompts. Your project is ready to ship — w
 
 ## What it does (in 60 seconds)
 
-Most "Claude Code best practice" docs are 30-page Notion pages and a Twitter thread. **ccup turns them into one prompt.** It asks 6 questions, then it:
+Most "Claude Code best practice" docs are 30-page Notion pages and a Twitter thread. **claude-code-up turns them into one prompt.** It asks 6 questions, then it:
 
 1. **Bootstraps your framework** — `npx create-expo-app@latest` / `create-next-app` / `create-vue` / 7 more, picked based on what you answered.
 2. **Curates the agents and skills** that match — 131 items from [wshobson/agents](https://github.com/wshobson/agents) + [obra/superpowers](https://github.com/obra/superpowers) + [Matt Pocock skills](https://github.com/mattpocock), filtered to ~16 defaults + the conditionals that fit your stack. The other ~50 noisy ones are skipped.
@@ -37,25 +37,25 @@ Everything is **project-scope** — nothing ever touches `~/.claude/`.
 
 ```sh
 # Just run it
-npx ccup
+npx claude-code-up
 
 # Or with a target directory
-npx ccup my-new-app
+npx claude-code-up my-new-app
 
 # Or force-overwrite a non-empty dir (with confirmation)
-npx ccup ../legacy-project --force
+npx claude-code-up ../legacy-project --force
 ```
 
 You'll go through a funnel of prompts:
 
 1. **Project name, target directory** — sensible defaults (sibling dir, not a subdirectory).
-2. **Git? GitHub?** — `gh` is detected and reused. ccup checks if the repo exists on GitHub; if not, creates it empty so the remote is ready. If it exists, offers to clone it as the starting point.
+2. **Git? GitHub?** — `gh` is detected and reused. claude-code-up checks if the repo exists on GitHub; if not, creates it empty so the remote is ready. If it exists, offers to clone it as the starting point.
 3. **Funnel (the entonnoir)** — Category (Web / Mobile / Backend / Fullstack / Data / CLI / Generic) → Language (TS / Py / Go / Rust / Dart / Swift / …) → Framework (Next.js / Expo / FastAPI / Django / Rails / 30+ more) → Database (Postgres / Supabase / Mongo / Vector / …) → ORM (Prisma / Drizzle / SQLAlchemy / …).
-4. **Scaffolder** — if the framework has one (Expo, Next.js, Vite, Vue, SvelteKit, Remix, Astro, NestJS, FastAPI), ccup offers to run `npx create-X@latest .` for you. Output is streamed live.
+4. **Scaffolder** — if the framework has one (Expo, Next.js, Vite, Vue, SvelteKit, Remix, Astro, NestJS, FastAPI), claude-code-up offers to run `npx create-X@latest .` for you. Output is streamed live.
 5. **Stack components** — tri-state multi-select: ● fully on, ◐ partial (orange — press **D** to drill into specifics), ○ off. The defaults are computed from a JSON-driven decision tree based on your funnel answers.
 6. **MCPs** — preselected by `applyWhen` rules. Credentials prompted via masked input, written to `.env`, validated by a real MCP `initialize + tools/call` handshake.
 
-Then a clear plan recap (with `◐` orange for partial selections and `⚠` warnings for missing env vars), confirm, and ccup runs:
+Then a clear plan recap (with `◐` orange for partial selections and `⚠` warnings for missing env vars), confirm, and claude-code-up runs:
 
 ```
 ✓ Scaffold complete                        npx create-expo-app@latest .
@@ -74,9 +74,9 @@ Then a clear plan recap (with `◐` orange for partial selections and `⚠` warn
 
 ---
 
-## Why ccup
+## Why claude-code-up
 
-| Without ccup | With ccup |
+| Without claude-code-up | With claude-code-up |
 |---|---|
 | Manually curate which of [wshobson's 100 agents](https://github.com/wshobson/agents) you actually need | Decision tree filters them by your funnel choices |
 | Cross-reference Superpowers + Pocock for duplicates (`tdd` exists in both) | The 49 conflicting items are pre-classified as `skip` |
@@ -159,7 +159,7 @@ The `[General]` / `[PY]` / `[Backend + Fullstack + Data]` chips tell you exactly
 ## Architecture
 
 ```
-ccup/
+claude-code-up/
 ├── catalog/                          ← JSON, the single source of truth
 │   ├── project-types.json            ← funnel options (categories/langs/frameworks/dbs/orms)
 │   ├── stack.json                    ← stack components
@@ -202,7 +202,7 @@ ccup/
 
 ## MCP handshake (real e2e verification)
 
-When you add an MCP, ccup doesn't just write `.mcp.json` and hope. It actually:
+When you add an MCP, claude-code-up doesn't just write `.mcp.json` and hope. It actually:
 
 1. Spawns the MCP server with the env vars you provided.
 2. Sends a JSON-RPC `initialize` request.
@@ -211,7 +211,7 @@ When you add an MCP, ccup doesn't just write `.mcp.json` and hope. It actually:
 5. If the catalog has a `test` field for that MCP, runs `tools/call <test.tool>` with `test.args`, validates the response (`expectField` / `expectPattern`).
 6. Kills the subprocess, reports `ok` / `failed: <stage>: <reason>` / `skipped: missing <env vars>`.
 
-So instead of seeing the MCP fail silently when `claude` launches, you see it during ccup:
+So instead of seeing the MCP fail silently when `claude` launches, you see it during claude-code-up:
 
 ```
 MCP initialize handshake: 3 ok · 1 failed · 1 skipped
@@ -229,20 +229,20 @@ MCP initialize handshake: 3 ok · 1 failed · 1 skipped
 - Node ≥ 18
 - Git
 - [`gh` CLI](https://cli.github.com/) (for GitHub flow — optional but recommended)
-- [Claude Code](https://claude.com/claude-code) ≥ 2.1.32 (auto-installed/upgraded by ccup if missing — stable channel by default)
+- [Claude Code](https://claude.com/claude-code) ≥ 2.1.32 (auto-installed/upgraded by claude-code-up if missing — stable channel by default)
 
 ---
 
 ## Roadmap
 
-- [ ] Publish to npm so `npx ccup` works without the GitHub fork
+- [ ] Publish to npm so `npx claude-code-up` works without the GitHub fork
 - [ ] Live D-key drill within the prompt (currently submits-and-redraws — works, but a single-frame interaction would be slicker)
-- [ ] User-local overrides (`~/.ccup/items-override.json`) to promote/demote items per personal preference
+- [ ] User-local overrides (`~/.claude-code-up/items-override.json`) to promote/demote items per personal preference
 - [ ] More scaffolders: T3, Astro, Tauri, Solid Start, Remix Vite
 - [ ] More MCPs: Slack, Notion, Linear, Sentry — with funnel-driven preselection
 - [ ] Translate the bundled `octo-scenario-tester` skill content to English
-- [ ] `ccup add` command — apply ccup to an existing project mid-way
-- [ ] `ccup doctor` — diagnose an existing ccup-bootstrapped project
+- [ ] `claude-code-up add` command — apply claude-code-up to an existing project mid-way
+- [ ] `claude-code-up doctor` — diagnose an existing claude-code-up-bootstrapped project
 
 ---
 
@@ -257,8 +257,8 @@ The fastest way to contribute: **edit a JSON file in `catalog/`**, run `npm run 
 Bigger changes (new sources, new prompt steps, new generators) live in `src/`.
 
 ```sh
-git clone https://github.com/steph-frtech/ccup
-cd ccup
+git clone https://github.com/steph-frtech/claude-code-up
+cd claude-code-up
 npm install
 npm run dev   # iterate
 npm run typecheck && npm run build

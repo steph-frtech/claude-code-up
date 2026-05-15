@@ -8,6 +8,7 @@ import { askStack } from "./stack.js";
 import { askMcp } from "./mcp.js";
 import { askFunnel } from "./funnel.js";
 import { askScaffolder } from "./scaffolder.js";
+import { askCommandBundles } from "./command-bundles.js";
 
 export interface AskProjectOptions {
   defaultDir?: string;
@@ -73,7 +74,7 @@ export async function askProject(
           options: [
             {
               value: "merge" as const,
-              label: "Keep existing files, add ccup config on top",
+              label: "Keep existing files, add claude-code-up config on top",
             },
             {
               value: "wipe" as const,
@@ -103,7 +104,7 @@ export async function askProject(
   const funnel = await askFunnel();
   if (funnel === null) return null;
 
-  // Scaffolder proposal — runs BEFORE ccup config (creates the base project).
+  // Scaffolder proposal — runs BEFORE claude-code-up config (creates the base project).
   const scaffolderChoice = await askScaffolder(funnel);
   if (scaffolderChoice === null) return null;
   const scaffolder = scaffolderChoice === "skip" ? undefined : scaffolderChoice;
@@ -113,6 +114,9 @@ export async function askProject(
 
   const mcp = await askMcp(funnel);
   if (mcp === null) return null;
+
+  const commandBundles = await askCommandBundles(funnel);
+  if (commandBundles === null) return null;
 
   return {
     name,
@@ -128,6 +132,8 @@ export async function askProject(
         ? funnel
         : undefined,
     scaffolder,
+    commandBundles:
+      commandBundles.bundleIds.length > 0 ? commandBundles : undefined,
     github: github ?? undefined,
     stack: stack.components.length > 0 ? stack : undefined,
     mcp: mcp.servers.length > 0 ? mcp : undefined,

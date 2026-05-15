@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this project is
 
-`ccup` (Claude Code Up) is a CLI that initializes a new project pre-configured for Claude Code: it generates `.claude/settings.json`, `CLAUDE.md`, `.mcp.json`, fetches selected skills from a remote registry, and optionally runs `git init`. Distributed via npm; runs via `npx ccup`.
+`claude-code-up` (Claude Code Up) is a CLI that initializes a new project pre-configured for Claude Code: it generates `.claude/settings.json`, `CLAUDE.md`, `.mcp.json`, fetches selected skills from a remote registry, and optionally runs `git init`. Distributed via npm; runs via `npx claude-code-up`.
 
 Always operates in Claude Code's **project scope** — every file it writes lives in the user's project root (`.claude/`, `CLAUDE.md`, `.mcp.json`), never in user-level config.
 
@@ -37,6 +37,6 @@ Templates are inlined as string constants in `src/templates.ts` (not separate fi
 ## Roadmap markers (not implemented yet)
 
 - `src/registry/` — fetch skills/MCP from a remote registry. URL configurable via `CCUP_REGISTRY_URL`. Manifest format: `{ version, skills: [...], mcpServers: [...] }`. Skills are GitHub-hosted, fetched via `raw.githubusercontent.com`; each skill entry lists its files explicitly (no directory listing).
-- `src/commands/add.ts` — `ccup add skill <name>` for adding to existing projects, idempotent.
+- `src/commands/add.ts` — `claude-code-up add skill <name>` for adding to existing projects, idempotent.
 
 When implementing the registry, keep `src/registry/client.ts` independent of prompts/generators — it should be testable in isolation against a mock HTTP layer.
