@@ -2,41 +2,77 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## What this project is
+## Behavioral guidelines
 
-`claude-code-up` (Claude Code Up) is a CLI that initializes a new project pre-configured for Claude Code: it generates `.claude/settings.json`, `CLAUDE.md`, `.mcp.json`, fetches selected skills from a remote registry, and optionally runs `git init`. Distributed via npm; runs via `npx claude-code-up`.
+Bias toward caution over speed. For trivial tasks, use judgment.
 
-Always operates in Claude Code's **project scope** — every file it writes lives in the user's project root (`.claude/`, `CLAUDE.md`, `.mcp.json`), never in user-level config.
+- **Think before coding.** State assumptions explicitly; surface tradeoffs; ask when unclear. Don't pick silently between interpretations.
+- **Simplicity first.** Minimum code that solves the problem. No speculative abstractions, configurability, or error handling for impossible scenarios.
+- **Surgical changes.** Touch only what the task requires. Match existing style. Remove imports/vars *your* changes orphaned — don't delete pre-existing dead code unprompted.
+- **Goal-driven.** Restate the task as a verifiable outcome before implementing. For multi-step work, write a brief plan with a verification step for each.
+
+## Project at a glance
+
+`claude-code-up` (npm package `claude-code-up`, bin `claude-code-up`) is an interactive CLI that bootstraps a Claude Code project: it runs a funnel of prompts (category → language → framework → database → ORM), then writes `.claude/`, `.mcp.json`, `CLAUDE.md`, optional scaffolder output, and pushes to GitHub. The end-of-flow runs `claude /init` headless to verify wiring.
+
+It is **project-scope only** — never touches `~/.claude/`. Anything user-scope is documented in `STACK.md` rather than auto-run.
 
 ## Commands
 
-- `npm run dev` — run the CLI from source via `tsx` (use for iteration)
-- `npm run build` — bundle with `tsup` to `dist/cli.js`
-- `npm run typecheck` — `tsc --noEmit`
-- `node dist/cli.js --help` — smoke-test a build
+```sh
+npm run gen          # regenerate src/{catalog,templates}.gen.ts from catalog/*.json and src/scripts/*.sh
+npm run dev          # tsx src/cli.ts — run the CLI from source (runs `gen` first via predev)
+npm run typecheck    # tsc --noEmit (runs `gen` first via pretypecheck)
+npm run build        # tsup → dist/cli.js (runs `gen` first via prebuild)
+npm test             # the husky pre-commit hook runs this — currently no test suite is wired up, so the hook just calls `npm test` which exits with whatever npm's default behavior is
+```
 
-## Architecture
+There is no lint script; Biome is the configured formatter/linter (`biome.json`, tab indent, double quotes) but it's not bound to a script — run `npx biome check .` or `npx biome format --write .` directly when needed.
 
-Entry point `src/cli.ts` parses `process.argv` directly (no parser dep) and dispatches. Single command in v0.1 (`init`), invoked by default when no command is given.
+## Architecture: mechanism in TS, policy in JSON
 
-Three-layer flow:
+The core invariant: **the TypeScript code is generic, all data lives in `catalog/*.json`.** Adding a new MCP / agent / skill / scaffolder is a JSON edit, not a TS change.
 
-1. **Prompts** (`src/prompts/*.ts`) — collect user input via `@clack/prompts`. Each prompt module is pure: receives options, returns an answer object or `null` on cancel. No file IO.
-2. **Generators** (`src/generators/*.ts`) — take fully-resolved answers and write files. Each generator handles one concern (`.claude/` dir, `CLAUDE.md`, `.gitignore`, `git init`). Generators do not prompt; conflicts are pre-checked upstream.
-3. **Command orchestrators** (`src/commands/*.ts`) — wire prompts → generators with spinners and error handling.
+### Code generation pipeline
 
-Templates are inlined as string constants in `src/templates.ts` (not separate files) so `tsup` produces a single self-contained `dist/cli.js`. If templates grow, switch to esbuild's text loader rather than runtime `fs` reads.
+`catalog/*.json` + `src/scripts/*.sh` → `scripts/gen-templates.mjs` → `src/catalog.gen.ts` + `src/templates.gen.ts` → imported through `src/catalog/loader.ts`.
 
-## Conventions
+- The `.gen.ts` files are **auto-generated** — do not edit. They're checked in but regenerated on every `dev` / `typecheck` / `build` via npm pre-hooks.
+- `gen-templates.mjs` also validates the JSON: every item must have a tier (`default` / `conditional` / `skip`); `skip` requires a `reason`; `default` must not have `applyWhen`; `project-types.json` must be `schemaVersion: "2"`.
+- After editing any `catalog/*.json`, run `npm run gen` (the pre-hooks pick this up automatically for the standard scripts).
 
-- ESM only. Imports use `.js` extension even for `.ts` source (required by `moduleResolution: bundler` + Node ESM output).
-- `dependencies` is kept lean — tsup externalizes everything in `dependencies` from the bundle. Adding a runtime dep should be deliberate.
-- Prompts return `null` on `p.isCancel(...)`. Orchestrators decide what to do (typically `p.cancel()` + `process.exit(0)`).
-- No file IO for templates — inline them in `src/templates.ts` and import.
+### Funnel → decision tree → installation
 
-## Roadmap markers (not implemented yet)
+1. **Prompts** (`src/prompts/`) collect funnel answers, scaffolder choice, stack components, MCPs, command bundles. The custom tri-state multiselect (`tristate-multiselect.ts`) gives ● / ◐ / ○ with a D-key drill-down — it's built on `@clack/core`, not `@clack/prompts`.
+2. **Decision tree** (`src/stack/decision-tree.ts`) resolves each catalog source (`wshobson` / `superpowers` / `pocock`) against the funnel via `matchesApplyWhen` and `resolveForSource`. `applyWhen` semantics:
+   - Missing field → always matches (default-like).
+   - `{}` empty object → opt-in only, never auto-matches.
+   - With rules → all present sections must intersect with the funnel (AND across sections, OR within a section).
+3. **Generators** (`src/generators/`) write the artifacts: `claude-dir.ts` builds `.claude/`, `claude-md.ts` writes `CLAUDE.md` (preserves existing if scaffolder/clone/merge ran), `mcp.ts` writes `.mcp.json` + `.env` and runs a real JSON-RPC `initialize` + optional `tools/call` handshake against each MCP server before reporting success.
+4. **Orchestrator**: `src/commands/init.ts` is the single entry point that wires preflight (Claude Code version check, install prompt) → prompts → confirm → generators → optional `claude /init` headless run → `claude doctor` offer → optional child shell.
 
-- `src/registry/` — fetch skills/MCP from a remote registry. URL configurable via `CCUP_REGISTRY_URL`. Manifest format: `{ version, skills: [...], mcpServers: [...] }`. Skills are GitHub-hosted, fetched via `raw.githubusercontent.com`; each skill entry lists its files explicitly (no directory listing).
-- `src/commands/add.ts` — `claude-code-up add skill <name>` for adding to existing projects, idempotent.
+### Important behavior to preserve
 
-When implementing the registry, keep `src/registry/client.ts` independent of prompts/generators — it should be testable in isolation against a mock HTTP layer.
+- **Scaffolder runs BEFORE `.claude/` is written**, in an empty target dir, because most scaffolders (Expo, Next, Vite…) refuse to run otherwise. `init.ts` handles both shapes: scaffolders that take `.` (cwd is target) and scaffolders with a `{{name}}` placeholder (cwd is parent, scaffolder creates the subdir). When a scaffolder ran, `generateClaudeMd` / `generateGitignore` are called with `preserveExisting: true`.
+- **MCP handshake is end-to-end**, not just config-writing. Failures are surfaced with the stage that failed (`tools/call query: connect ECONNREFUSED…`). Missing env vars produce `skipped`, not silent success.
+- **Project-scope only.** No code should write to `~/.claude/`. User-scope tools (`claude-mem`, `cc-lens`) get documented in `STACK.md` with a copy-pasteable install line.
+
+## Adding catalog entries
+
+The high-frequency edit. See `CONTRIBUTING.md` for full templates. Quick map:
+
+| Adding… | Edit | After |
+|---|---|---|
+| MCP server | `catalog/mcps.json` + extend `McpServerId` in `src/types.ts` | `npm run gen && npm run typecheck` |
+| Agent / skill (from a source) | `catalog/items/<source>.json` | `npm run gen` |
+| Bundled skill with inline `.md` | `catalog/skills.json` | `npm run gen` |
+| Framework scaffolder | `catalog/scaffolders.json` | `npm run gen` |
+| Command bundle (lib installs per stack branch) | `catalog/command-bundles.json` | `npm run gen` |
+
+Always pick a `tier`: `default` (always installed, no `applyWhen`), `conditional` (with `applyWhen` rules), or `skip` (requires `reason`). The `gen` script throws if these rules are violated.
+
+## Misc
+
+- **Husky pre-commit** runs `npm test`. There's no test suite yet — keep this in mind before adding one, and update `.husky/pre-commit` accordingly.
+- **The bundled MCP server stub** at `src/index.ts` is unrelated to the CLI — it's a placeholder MCP server scaffold and is not wired into the build (`tsup.config.ts` only bundles `src/cli.ts`).
+- **Bumping the CLI version** requires editing both `package.json` and the `VERSION` constant in `src/cli.ts`.

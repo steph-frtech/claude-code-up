@@ -44,7 +44,9 @@
     "build": "tsup",
     "dev": "tsx src/cli.ts",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "prepare": "husky",
+    "test": "echo \"no test suite wired up yet\" && exit 0"
   },
   "engines": {
     "node": ">=18"
@@ -52,13 +54,19 @@
   "dependencies": {
     "@clack/core": "^0.4.2",
     "@clack/prompts": "^0.10.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "execa": "^9.5.1",
-    "picocolors": "^1.1.1"
+    "picocolors": "^1.1.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@types/node": "^20.11.0",
+    "@biomejs/biome": "2.4.15",
+    "@types/node": "^20.19.41",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.4",
     "tsup": "^8.3.0",
-    "tsx": "^4.19.0",
-    "typescript": "^5.6.0"
-  }
+    "tsx": "^4.22.0",
+    "typescript": "^5.9.3"
+  },
+  "main": "index.js"
 }
