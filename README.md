@@ -20,12 +20,15 @@ npx claude-code-up
 That's it. One command. Interactive prompts. Your project is ready to ship — with battle-tested agents, the right MCPs, runtime hooks, a working statusline, and the scaffolding for your stack.
 
 ---
+## Démo
+
+[![asciicast](https://asciinema.org/a/IzS7DfBBy59pFNMo.svg)](https://asciinema.org/a/IzS7DfBBy59pFNMo)
 
 ## What it does (in 60 seconds)
 
 Most "Claude Code best practice" docs are 30-page Notion pages and a Twitter thread. **claude-code-up turns them into one prompt.** It asks 6 questions, then it:
 
-1. **Bootstraps your framework** — `npx create-expo-app@latest` / `create-next-app` / `create-vue` / 7 more, picked based on what you answered.
+1. **Bootstraps your framework** — `npx create-expo-app@latest` / `create-next-app` / `create-vue` / 7 more, picked based on what you answered.tt
 2. **Curates the agents and skills** that match — 131 items from [wshobson/agents](https://github.com/wshobson/agents) + [obra/superpowers](https://github.com/obra/superpowers) + [Matt Pocock skills](https://github.com/mattpocock), filtered to ~16 defaults + the conditionals that fit your stack. The other ~50 noisy ones are skipped.
 3. **Writes `.mcp.json`** with the MCP servers your project actually uses — GitHub, Context7, Postgres, Supabase, Stripe, RevenueCat, Better Auth, Playwright. Credentials prompted (masked), `.env` written, `gitignore`d. Then each MCP is **smoke-tested end-to-end** with a real JSON-RPC `initialize` handshake.
 4. **Installs the harness** — Karpathy's CLAUDE.md, optional Superpowers/Pocock skills, agent-teams flag (research preview), pretty 256-color statusline, agentshield audit hook, project-scope `settings.json`.
