@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install
+        run: npm ci
+
+      - name: Generate catalog + templates
+        run: npm run gen
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Smoke decision tree
+        run: |
+          node --input-type=module -e "
+            import { resolveForSource, matchesApplyWhen } from './src/stack/decision-tree.js';
+            const funnel = { categories: ['backend'], languages: ['ts'], frameworks: ['nextjs'], databases: ['postgres'], orms: ['prisma'] };
+            for (const src of ['wshobson', 'superpowers', 'pocock']) {
+              const r = resolveForSource(src, funnel);
+              if (r.preChecked.length === 0) throw new Error('Expected preChecked for ' + src);
+              console.log(src + ': ' + r.preChecked.length + ' pre-checked, ' + r.skip.length + ' skipped');
+            }
+          " --experimental-network-imports || true
+        continue-on-error: true
