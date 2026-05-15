@@ -1,0 +1,98 @@
+{
+  "schemaVersion": "1",
+  "source": "superpowers",
+  "repo": "https://github.com/obra/superpowers",
+  "items": [
+    {
+      "id": "brainstorming",
+      "kind": "skill",
+      "tier": "default",
+      "description": "Framing before code, anti jump-to-coding"
+    },
+    {
+      "id": "writing-plans",
+      "kind": "skill",
+      "tier": "default",
+      "description": "Spec + plan combined, breakdown 2-5min"
+    },
+    {
+      "id": "using-git-worktrees",
+      "kind": "skill",
+      "tier": "default",
+      "description": "Branch isolation, prerequisite for parallelism"
+    },
+    {
+      "id": "test-driven-development",
+      "kind": "skill",
+      "tier": "default",
+      "description": "Red/green/refactor, quality by default"
+    },
+    {
+      "id": "requesting-code-review",
+      "kind": "skill",
+      "tier": "default",
+      "description": "Audit before merge"
+    },
+    {
+      "id": "subagent-driven-development",
+      "kind": "skill",
+      "tier": "default",
+      "description": "Enables multi-agent workflows"
+    },
+    {
+      "id": "systematic-debugging",
+      "kind": "skill",
+      "tier": "default",
+      "description": "Disciplined debugging"
+    },
+    {
+      "id": "receiving-code-review",
+      "kind": "skill",
+      "tier": "conditional",
+      "description": "Apply review feedback",
+      "applyWhen": {}
+    },
+    {
+      "id": "dispatching-parallel-agents",
+      "kind": "skill",
+      "tier": "conditional",
+      "description": "Coordinate multi-agents in parallel",
+      "applyWhen": {}
+    },
+    {
+      "id": "executing-plans",
+      "kind": "skill",
+      "tier": "conditional",
+      "description": "Batched execution with checkpoints",
+      "applyWhen": {}
+    },
+    {
+      "id": "finishing-a-development-branch",
+      "kind": "skill",
+      "tier": "conditional",
+      "description": "Cleanup before merge",
+      "applyWhen": {}
+    },
+    {
+      "id": "verification-before-completion",
+      "kind": "skill",
+      "tier": "conditional",
+      "description": "Completion checklist",
+      "applyWhen": {}
+    },
+    {
+      "id": "using-superpowers",
+      "kind": "skill",
+      "tier": "conditional",
+      "description": "Meta-skill explaining the harness usage",
+      "applyWhen": {}
+    },
+    {
+      "id": "writing-skills",
+      "kind": "skill",
+      "tier": "conditional",
+      "description": "Author your own skills (equivalent to Pocock write-a-skill)",
+      "applyWhen": {}
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "schemaVersion": "1",
+  "source": "pocock",
+  "repo": "https://github.com/ismaelJimenez/mp-skills",
+  "items": [
+    {
+      "id": "caveman",
+      "kind": "skill",
+      "tier": "default",
+      "description": "-75% tokens in long sessions"
+    },
+    {
+      "id": "qa",
+      "kind": "skill",
+      "tier": "default",
+      "description": "Disciplined debugging (mapped from 'diagnose')",
+      "mappedFrom": "diagnose"
+    },
+    {
+      "id": "zoom-out",
+      "kind": "skill",
+      "tier": "default",
+      "description": "Global perspective"
+    },
+    {
+      "id": "improve-codebase-architecture",
+      "kind": "skill",
+      "tier": "default",
+      "description": "Anti-ball-of-mud"
+    },
+    {
+      "id": "github-triage",
+      "kind": "skill",
+      "tier": "conditional",
+      "description": "GitHub ticket management",
+      "applyWhen": {}
+    },
+    {
+      "id": "triage-issue",
+      "kind": "skill",
+      "tier": "conditional",
+      "description": "Single issue triage",
+      "applyWhen": {}
+    },
+    {
+      "id": "write-a-skill",
+      "kind": "skill",
+      "tier": "conditional",
+      "description": "Author your own skills",
+      "applyWhen": {}
+    },
+    {
+      "id": "setup-pre-commit",
+      "kind": "skill",
+      "tier": "conditional",
+      "description": "Husky + lint-staged for new projects",
+      "applyWhen": {}
+    },
+    {
+      "id": "git-guardrails-claude-code",
+      "kind": "skill",
+      "tier": "conditional",
+      "description": "Safety rails on destructive git commands",
+      "applyWhen": {}
+    },
+    {
+      "id": "design-an-interface",
+      "kind": "skill",
+      "tier": "conditional",
+      "description": "Compare UI variants (mapped from 'prototype')",
+      "applyWhen": {
+        "categories": ["web", "mobile", "fullstack"]
+      },
+      "mappedFrom": "prototype"
+    },
+    {
+      "id": "domain-model",
+      "kind": "skill",
+      "tier": "conditional",
+      "description": "Business domain modeling",
+      "applyWhen": {
+        "categories": ["backend", "fullstack"]
+      }
+    },
+    {
+      "id": "ubiquitous-language",
+      "kind": "skill",
+      "tier": "conditional",
+      "description": "DDD ubiquitous language",
+      "applyWhen": {
+        "categories": ["backend", "fullstack"]
+      }
+    },
+    {
+      "id": "edit-article",
+      "kind": "skill",
+      "tier": "conditional",
+      "description": "Markdown article editing",
+      "applyWhen": {}
+    },
+    {
+      "id": "obsidian-vault",
+      "kind": "skill",
+      "tier": "conditional",
+      "description": "Obsidian vault management",
+      "applyWhen": {}
+    },
+    {
+      "id": "request-refactor-plan",
+      "kind": "skill",
+      "tier": "conditional",
+      "description": "Refactoring plan",
+      "applyWhen": {}
+    },
+    {
+      "id": "grill-me",
+      "kind": "skill",
+      "tier": "skip",
+      "reason": "Duplicate of Superpowers brainstorming"
+    },
+    {
+      "id": "to-prd",
+      "kind": "skill",
+      "tier": "skip",
+      "reason": "Duplicate of Superpowers writing-plans"
+    },
+    {
+      "id": "to-issues",
+      "kind": "skill",
+      "tier": "skip",
+      "reason": "Duplicate of Superpowers writing-plans"
+    },
+    {
+      "id": "tdd",
+      "kind": "skill",
+      "tier": "skip",
+      "reason": "Duplicate of Superpowers test-driven-development"
+    },
+    {
+      "id": "migrate-to-shoehorn",
+      "kind": "skill",
+      "tier": "skip",
+      "reason": "Highly niche TS migration"
+    },
+    {
+      "id": "scaffold-exercises",
+      "kind": "skill",
+      "tier": "skip",
+      "reason": "For training material, out of scope for ccup"
+    }
+  ]
+}

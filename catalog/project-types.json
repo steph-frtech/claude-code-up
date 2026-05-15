@@ -1,0 +1,171 @@
+{
+  "schemaVersion": "2",
+  "categories": [
+    { "id": "web", "name": "Web" },
+    { "id": "mobile", "name": "Mobile" },
+    { "id": "backend", "name": "Backend API" },
+    { "id": "fullstack", "name": "Fullstack" },
+    { "id": "data", "name": "Data / ML" },
+    { "id": "cli", "name": "CLI / Library" },
+    { "id": "generic", "name": "Generic / other" }
+  ],
+  "languagesByCategory": {
+    "web": [
+      { "id": "ts", "name": "TypeScript" },
+      { "id": "js", "name": "JavaScript" }
+    ],
+    "mobile": [
+      { "id": "ts", "name": "TypeScript (RN / Expo)" },
+      { "id": "dart", "name": "Dart" },
+      { "id": "swift", "name": "Swift" },
+      { "id": "kotlin", "name": "Kotlin" }
+    ],
+    "backend": [
+      { "id": "ts", "name": "TypeScript (Node)" },
+      { "id": "py", "name": "Python" },
+      { "id": "go", "name": "Go" },
+      { "id": "rust", "name": "Rust" },
+      { "id": "java", "name": "Java" },
+      { "id": "ruby", "name": "Ruby" },
+      { "id": "elixir", "name": "Elixir" }
+    ],
+    "fullstack": [
+      { "id": "ts", "name": "TypeScript end-to-end" }
+    ],
+    "data": [
+      { "id": "py", "name": "Python" },
+      { "id": "r", "name": "R" }
+    ],
+    "cli": [
+      { "id": "ts", "name": "TypeScript (Node)" },
+      { "id": "py", "name": "Python" },
+      { "id": "go", "name": "Go" },
+      { "id": "rust", "name": "Rust" }
+    ],
+    "generic": []
+  },
+  "frameworksByLangCategory": {
+    "web:ts": [
+      { "id": "nextjs", "name": "Next.js" },
+      { "id": "react-vite", "name": "React + Vite" },
+      { "id": "vue", "name": "Vue 3" },
+      { "id": "svelte", "name": "SvelteKit" },
+      { "id": "astro", "name": "Astro" },
+      { "id": "remix", "name": "Remix" }
+    ],
+    "web:js": [
+      { "id": "nextjs-js", "name": "Next.js (JS)" },
+      { "id": "react-cra", "name": "Create React App" }
+    ],
+    "mobile:ts": [
+      { "id": "rn", "name": "React Native" },
+      { "id": "expo", "name": "Expo" }
+    ],
+    "mobile:dart": [
+      { "id": "flutter", "name": "Flutter" }
+    ],
+    "mobile:swift": [
+      { "id": "swiftui", "name": "SwiftUI" }
+    ],
+    "mobile:kotlin": [
+      { "id": "compose", "name": "Jetpack Compose" }
+    ],
+    "backend:ts": [
+      { "id": "express", "name": "Express" },
+      { "id": "fastify", "name": "Fastify" },
+      { "id": "hono", "name": "Hono" },
+      { "id": "nestjs", "name": "NestJS" }
+    ],
+    "backend:py": [
+      { "id": "fastapi", "name": "FastAPI" },
+      { "id": "django", "name": "Django" },
+      { "id": "flask", "name": "Flask" }
+    ],
+    "backend:go": [
+      { "id": "gin", "name": "Gin" },
+      { "id": "echo", "name": "Echo" },
+      { "id": "stdlib", "name": "stdlib (net/http)" }
+    ],
+    "backend:rust": [
+      { "id": "axum", "name": "Axum" },
+      { "id": "actix", "name": "Actix Web" }
+    ],
+    "backend:java": [
+      { "id": "spring", "name": "Spring Boot" }
+    ],
+    "backend:ruby": [
+      { "id": "rails", "name": "Rails" }
+    ],
+    "backend:elixir": [
+      { "id": "phoenix", "name": "Phoenix" }
+    ],
+    "fullstack:ts": [
+      { "id": "t3", "name": "T3 (Next + tRPC + Prisma)" },
+      { "id": "remix-prisma", "name": "Remix + Prisma" },
+      { "id": "nextjs-drizzle", "name": "Next.js + Drizzle" }
+    ],
+    "data:py": [
+      { "id": "jupyter", "name": "Jupyter" },
+      { "id": "ml", "name": "PyTorch / sklearn / HuggingFace" },
+      { "id": "pandas", "name": "pandas / polars" }
+    ],
+    "data:r": [
+      { "id": "tidyverse", "name": "tidyverse" }
+    ],
+    "cli:ts": [
+      { "id": "commander", "name": "commander / cac" }
+    ],
+    "cli:py": [
+      { "id": "click", "name": "click / typer" }
+    ],
+    "cli:go": [
+      { "id": "cobra", "name": "cobra" }
+    ],
+    "cli:rust": [
+      { "id": "clap", "name": "clap" }
+    ]
+  },
+  "databases": [
+    { "id": "postgres", "name": "PostgreSQL (self-hosted)" },
+    { "id": "mysql", "name": "MySQL / MariaDB" },
+    { "id": "sqlite", "name": "SQLite" },
+    { "id": "mongodb", "name": "MongoDB" },
+    { "id": "redis", "name": "Redis (cache / queue)" },
+    { "id": "supabase", "name": "Supabase (managed Postgres + auth)" },
+    { "id": "planetscale", "name": "PlanetScale (managed MySQL)" },
+    { "id": "neon", "name": "Neon (serverless Postgres)" },
+    { "id": "elastic", "name": "Elasticsearch / OpenSearch" },
+    { "id": "vector", "name": "Vector DB (pgvector / Qdrant / Pinecone)" },
+    { "id": "none", "name": "No database" }
+  ],
+  "ormsByLanguage": {
+    "ts": [
+      { "id": "prisma", "name": "Prisma" },
+      { "id": "drizzle", "name": "Drizzle" },
+      { "id": "typeorm", "name": "TypeORM" },
+      { "id": "kysely", "name": "Kysely (query builder)" },
+      { "id": "raw", "name": "Raw SQL" }
+    ],
+    "py": [
+      { "id": "sqlalchemy", "name": "SQLAlchemy" },
+      { "id": "django-orm", "name": "Django ORM" },
+      { "id": "tortoise", "name": "Tortoise ORM" },
+      { "id": "raw", "name": "Raw SQL" }
+    ],
+    "go": [
+      { "id": "gorm", "name": "GORM" },
+      { "id": "sqlc", "name": "sqlc" },
+      { "id": "raw", "name": "Raw SQL (database/sql)" }
+    ],
+    "rust": [
+      { "id": "sqlx", "name": "SQLx" },
+      { "id": "diesel", "name": "Diesel" }
+    ],
+    "java": [
+      { "id": "jpa", "name": "JPA / Hibernate" }
+    ],
+    "ruby": [
+      { "id": "activerecord", "name": "ActiveRecord" }
+    ]
+  }
+}

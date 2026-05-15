@@ -1,0 +1,181 @@
+{
+  "schemaVersion": "1",
+  "items": [
+    {
+      "id": "karpathy",
+      "category": "claude-md",
+      "name": "Karpathy CLAUDE.md guidelines",
+      "description": "Anti-bloat coding principles by Andrej Karpathy",
+      "source": "https://github.com/multica-ai/andrej-karpathy-skills",
+      "scope": "project",
+      "hint": "replaces CLAUDE.md",
+      "tags": ["global"],
+      "preselectFor": ["web", "mobile", "backend", "fullstack", "data", "cli", "generic"],
+      "installer": "karpathy",
+      "available": {}
+    },
+    {
+      "id": "superpowers",
+      "category": "marketplace",
+      "name": "Superpowers (TDD, debugging, brainstorming)",
+      "description": "14 skills total — 7 pre-checked as defaults; press D to customize",
+      "source": "https://github.com/obra/superpowers",
+      "scope": "project",
+      "hint": ".claude/skills/superpowers__* (flattened) + .claude/marketplaces/superpowers/ (mirror)",
+      "tags": ["global"],
+      "preselectFor": ["web", "mobile", "backend", "fullstack", "data", "cli"],
+      "installer": "superpowers",
+      "available": { "skills": 14 },
+      "defaultSkills": [
+        "brainstorming",
+        "writing-plans",
+        "using-git-worktrees",
+        "test-driven-development",
+        "requesting-code-review",
+        "subagent-driven-development",
+        "systematic-debugging"
+      ]
+    },
+    {
+      "id": "claude-mem",
+      "category": "tool",
+      "name": "claude-mem (persistent memory across sessions)",
+      "description": "Compresses session context and re-injects in future sessions",
+      "source": "https://github.com/thedotmack/claude-mem",
+      "scope": "user-documented",
+      "hint": "STACK.md (npx claude-mem install — user-scope)",
+      "tags": ["global"],
+      "preselectFor": [],
+      "installer": "claude-mem",
+      "available": { "plugins": 1 },
+      "instructions": ["In your shell:", "  npx claude-mem install"]
+    },
+    {
+      "id": "subagents",
+      "category": "subagent",
+      "name": "Default subagents (code-reviewer, security-auditor, test-writer)",
+      "description": "Three curated subagents bundled by ccup",
+      "source": "bundled in ccup",
+      "scope": "project",
+      "hint": ".claude/agents/",
+      "tags": ["global"],
+      "preselectFor": ["web", "mobile", "backend", "fullstack", "data", "cli", "generic"],
+      "installer": "subagents",
+      "available": { "agents": 3 }
+    },
+    {
+      "id": "wshobson",
+      "category": "marketplace",
+      "name": "wshobson/agents (80 plugins — 2 pre-checked as defaults)",
+      "description": "80 plugins total — only essential review/testing plugins pre-checked; press D to customize",
+      "source": "https://github.com/wshobson/agents",
+      "scope": "project",
+      "hint": ".claude/marketplaces/wshobson/ + flattened defaults in .claude/{agents,skills,commands}/",
+      "tags": ["global"],
+      "preselectFor": ["backend", "fullstack"],
+      "installer": "wshobson",
+      "available": { "agents": 185, "skills": 153, "plugins": 80, "commands": 100 },
+      "instructions": [
+        "To activate the cloned marketplace in Claude Code:",
+        "  /plugin marketplace add ./.claude/marketplaces/wshobson",
+        "  /plugin install <plugin-name>"
+      ],
+      "defaultPlugins": [
+        "comprehensive-review",
+        "unit-testing"
+      ]
+    },
+    {
+      "id": "cc-lens",
+      "category": "tool",
+      "name": "cc-lens (local analytics dashboard)",
+      "description": "Local dashboard for Claude Code session data",
+      "source": "https://github.com/Arindam200/cc-lens",
+      "scope": "user-documented",
+      "hint": "STACK.md (npx cc-lens — user-scope)",
+      "tags": ["global"],
+      "preselectFor": [],
+      "installer": "cc-lens",
+      "available": {},
+      "instructions": ["In your shell:", "  npx cc-lens"]
+    },
+    {
+      "id": "agentshield",
+      "category": "tool",
+      "name": "agentshield (security audit CLI)",
+      "description": "Scans .claude/ for hardcoded secrets, permission misconfigs, etc.",
+      "source": "https://github.com/affaan-m/agentshield",
+      "scope": "project",
+      "hint": ".claude/scripts/audit.sh",
+      "tags": ["global"],
+      "preselectFor": ["web", "mobile", "backend", "fullstack", "data", "cli"],
+      "installer": "agentshield",
+      "available": {}
+    },
+    {
+      "id": "statusline",
+      "category": "tool",
+      "name": "Pretty statusline (tokens, rate limits, diff stats)",
+      "description": "Segmented bottom statusline with color-graded context usage",
+      "source": "bundled in ccup",
+      "scope": "project",
+      "hint": ".claude/statusline.sh + settings.json statusLine entry",
+      "tags": ["global"],
+      "preselectFor": ["web", "mobile", "backend", "fullstack", "data", "cli", "generic"],
+      "installer": "statusline",
+      "available": {}
+    },
+    {
+      "id": "octo-issue-tracker",
+      "category": "skill",
+      "name": "octo-issue-tracker (GitHub issues triage skill)",
+      "description": "Skill that triages stale issues, untriaged items, blockers, PRs awaiting review. Cross-refs with .octo/ISSUES.md via OCTO-### IDs.",
+      "source": "bundled in ccup",
+      "scope": "project",
+      "hint": ".claude/skills/octo-issue-tracker/SKILL.md",
+      "tags": ["global"],
+      "preselectFor": ["web", "mobile", "backend", "fullstack", "data", "cli", "generic"],
+      "installer": "skill-bundle",
+      "available": { "skills": 1 }
+    },
+    {
+      "id": "octo-scenario-tester",
+      "category": "skill",
+      "name": "octo-scenario-tester (scenarios-before-code discipline)",
+      "description": "Forces test scenarios in markdown BEFORE coding, 1:1 mapping to executable tests, tests/STATUS.md upkeep, integrates with octo-issue-tracker.",
+      "source": "bundled in ccup",
+      "scope": "project",
+      "hint": ".claude/skills/scenario-tester/SKILL.md",
+      "tags": ["global"],
+      "preselectFor": ["web", "mobile", "backend", "fullstack", "data", "cli", "generic"],
+      "installer": "skill-bundle",
+      "available": { "skills": 1 }
+    },
+    {
+      "id": "pocock",
+      "category": "marketplace",
+      "name": "Matt Pocock skills (21 skills — curated subset pre-checked)",
+      "description": "Skills like caveman (token saving), zoom-out, improve-codebase-architecture. Press D to customize.",
+      "source": "https://github.com/ismaelJimenez/mp-skills",
+      "scope": "project",
+      "hint": ".claude/skills/pocock__* (flattened)",
+      "tags": ["global"],
+      "preselectFor": ["web", "mobile", "backend", "fullstack", "data", "cli"],
+      "installer": "pocock",
+      "available": { "skills": 21 }
+    },
+    {
+      "id": "agent-teams",
+      "category": "feature-flag",
+      "name": "Agent Teams (research preview, swarms) ⚠ experimental",
+      "description": "Enables CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 — needs Claude Code ≥2.1.32, Opus 4.6+, Pro/Max plan",
+      "source": "Claude Code experimental flag",
+      "scope": "project",
+      "hint": ".claude/settings.json (env entry)",
+      "tags": ["global"],
+      "preselectFor": [],
+      "installer": "agent-teams",
+      "available": {}
+    }
+  ]
+}

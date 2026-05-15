@@ -1,0 +1,64 @@
+{
+  "name": "ccup",
+  "version": "0.1.0",
+  "description": "Bootstrap a Claude Code project with the right agents, skills, MCPs, hooks, scaffolders — JSON-driven decision tree, project-scope, e2e verified.",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "anthropic",
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "agents",
+    "skills",
+    "scaffolding",
+    "cli",
+    "wshobson",
+    "superpowers"
+  ],
+  "homepage": "https://github.com/steph-frtech/ccup#readme",
+  "bugs": {
+    "url": "https://github.com/steph-frtech/ccup/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/steph-frtech/ccup.git"
+  },
+  "license": "MIT",
+  "author": "steph-frtech",
+  "type": "module",
+  "bin": {
+    "ccup": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "catalog",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "gen": "node scripts/gen-templates.mjs",
+    "prebuild": "npm run gen",
+    "predev": "npm run gen",
+    "pretypecheck": "npm run gen",
+    "build": "tsup",
+    "dev": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@clack/core": "^0.4.2",
+    "@clack/prompts": "^0.10.0",
+    "execa": "^9.5.1",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsup": "^8.3.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

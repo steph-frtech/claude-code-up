@@ -1,0 +1,152 @@
+{
+  "schemaVersion": "1",
+  "servers": [
+    {
+      "id": "github",
+      "name": "GitHub",
+      "description": "PR, issues, cross-repo code search — without leaving the terminal",
+      "rating": 3,
+      "tags": ["global"],
+      "preselectFor": ["web", "mobile", "backend", "fullstack", "data", "cli"],
+      "config": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-github"],
+        "env": {
+          "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+        }
+      },
+      "requiresEnvVars": ["GITHUB_PERSONAL_ACCESS_TOKEN"],
+      "envHint": "Create a PAT at https://github.com/settings/tokens with `repo` + `read:org` scopes, then export GITHUB_PERSONAL_ACCESS_TOKEN."
+    },
+    {
+      "id": "context7",
+      "name": "Context7",
+      "description": "Up-to-date docs for Next, Medusa, Prisma, etc. — no more hallucinated APIs",
+      "rating": 3,
+      "tags": ["global"],
+      "preselectFor": ["web", "mobile", "backend", "fullstack"],
+      "config": {
+        "command": "npx",
+        "args": ["-y", "@upstash/context7-mcp"]
+      }
+    },
+    {
+      "id": "playwright",
+      "name": "Playwright (Microsoft)",
+      "description": "Browser automation, tests UI, scraping JS, snapshots accessibility",
+      "rating": 3,
+      "tags": ["global"],
+      "preselectFor": ["web"],
+      "applyWhen": {
+        "categories": ["web", "mobile", "fullstack"]
+      },
+      "config": {
+        "command": "npx",
+        "args": ["-y", "@playwright/mcp"]
+      }
+    },
+    {
+      "id": "postgres",
+      "name": "PostgreSQL",
+      "description": "Requêtes naturelles sur tes bases Postgres",
+      "rating": 3,
+      "tags": ["global"],
+      "preselectFor": ["backend", "fullstack", "data"],
+      "applyWhen": {
+        "databases": ["postgres", "supabase", "neon", "planetscale"]
+      },
+      "config": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "@modelcontextprotocol/server-postgres",
+          "${POSTGRES_CONNECTION_STRING}"
+        ]
+      },
+      "requiresEnvVars": ["POSTGRES_CONNECTION_STRING"],
+      "envHint": "Export POSTGRES_CONNECTION_STRING (e.g., postgres://user:pass@host:5432/db).",
+      "test": {
+        "tool": "query",
+        "args": { "sql": "SELECT 1 AS ok" },
+        "expectField": "content"
+      }
+    },
+    {
+      "id": "supabase",
+      "name": "Supabase",
+      "description": "Supabase DB + auth via MCP",
+      "rating": 2,
+      "tags": ["global"],
+      "preselectFor": ["backend", "fullstack"],
+      "applyWhen": {
+        "databases": ["supabase"]
+      },
+      "config": {
+        "command": "npx",
+        "args": ["-y", "@supabase/mcp-server-supabase"],
+        "env": {
+          "SUPABASE_URL": "${SUPABASE_URL}",
+          "SUPABASE_SERVICE_ROLE_KEY": "${SUPABASE_SERVICE_ROLE_KEY}"
+        }
+      },
+      "requiresEnvVars": ["SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY"],
+      "envHint": "Get URL + service role key from Supabase project settings → API."
+    },
+    {
+      "id": "stripe",
+      "name": "Stripe (payments)",
+      "description": "Charges, subscriptions, refunds — official agent toolkit",
+      "rating": 3,
+      "tags": ["global"],
+      "preselectFor": ["web", "mobile", "fullstack", "backend"],
+      "applyWhen": {
+        "categories": ["web", "mobile", "fullstack", "backend"]
+      },
+      "config": {
+        "command": "npx",
+        "args": ["-y", "@stripe/agent-toolkit", "--tools=all"],
+        "env": {
+          "STRIPE_SECRET_KEY": "${STRIPE_SECRET_KEY}"
+        }
+      },
+      "requiresEnvVars": ["STRIPE_SECRET_KEY"],
+      "envHint": "Stripe Dashboard → Developers → API keys → secret key (use sk_test_… in dev)."
+    },
+    {
+      "id": "revenuecat",
+      "name": "RevenueCat (IAP / subscriptions)",
+      "description": "Mobile in-app purchases, subscribers, entitlements via v2 REST API",
+      "rating": 2,
+      "tags": ["global"],
+      "preselectFor": ["mobile"],
+      "applyWhen": {
+        "categories": ["mobile"]
+      },
+      "config": {
+        "command": "npx",
+        "args": ["-y", "github:iamhenry/revenuecat-mcp"],
+        "env": {
+          "REVENUECAT_API_KEY": "${REVENUECAT_API_KEY}"
+        }
+      },
+      "requiresEnvVars": ["REVENUECAT_API_KEY"],
+      "envHint": "RevenueCat dashboard → Project settings → API keys (v2 secret key)."
+    },
+    {
+      "id": "better-auth",
+      "name": "Better Auth (TS auth setup)",
+      "description": "Better Auth scaffolding — sessions, OAuth, magic links",
+      "rating": 2,
+      "tags": ["global"],
+      "preselectFor": ["web", "fullstack", "backend"],
+      "applyWhen": {
+        "languages": ["ts"],
+        "categories": ["web", "fullstack", "backend"]
+      },
+      "config": {
+        "command": "npx",
+        "args": ["-y", "github:nahmanmate/better-auth-mcp-server"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "1",
+  "scaffolders": [
+    {
+      "id": "expo",
+      "name": "Expo (create-expo-app)",
+      "description": "Bootstrap React Native app via Expo, TypeScript default template",
+      "command": "npx",
+      "args": ["-y", "create-expo-app@latest", "."],
+      "matchFrameworks": ["expo", "rn"]
+    },
+    {
+      "id": "nextjs",
+      "name": "Next.js (create-next-app)",
+      "description": "Bootstrap Next.js with App Router + TypeScript + Tailwind",
+      "command": "npx",
+      "args": [
+        "-y",
+        "create-next-app@latest",
+        ".",
+        "--typescript",
+        "--app",
+        "--tailwind",
+        "--eslint",
+        "--use-npm"
+      ],
+      "matchFrameworks": ["nextjs", "nextjs-js"]
+    },
+    {
+      "id": "vite-react",
+      "name": "Vite + React (TypeScript)",
+      "description": "Vite + React + TS scaffold",
+      "command": "npm",
+      "args": ["create", "vite@latest", ".", "--", "--template", "react-ts"],
+      "matchFrameworks": ["react-vite"]
+    },
+    {
+      "id": "vue",
+      "name": "Vue 3 (create-vue)",
+      "description": "Interactive Vue 3 scaffolder",
+      "command": "npm",
+      "args": ["create", "vue@latest", "."],
+      "matchFrameworks": ["vue"]
+    },
+    {
+      "id": "svelte",
+      "name": "SvelteKit (create-svelte)",
+      "description": "Interactive SvelteKit scaffolder",
+      "command": "npm",
+      "args": ["create", "svelte@latest", "."],
+      "matchFrameworks": ["svelte"]
+    },
+    {
+      "id": "remix",
+      "name": "Remix (create-remix)",
+      "description": "Remix app scaffold",
+      "command": "npx",
+      "args": ["-y", "create-remix@latest", "."],
+      "matchFrameworks": ["remix"]
+    },
+    {
+      "id": "astro",
+      "name": "Astro (create-astro)",
+      "description": "Interactive Astro scaffolder",
+      "command": "npm",
+      "args": ["create", "astro@latest", "."],
+      "matchFrameworks": ["astro"]
+    },
+    {
+      "id": "nestjs",
+      "name": "NestJS (nest CLI)",
+      "description": "Bootstrap a NestJS API (TypeScript)",
+      "command": "npx",
+      "args": ["-y", "@nestjs/cli", "new", "."],
+      "matchFrameworks": ["nestjs"]
+    },
+    {
+      "id": "fastapi",
+      "name": "FastAPI starter (uv)",
+      "description": "Requires uv installed — sets up a FastAPI project",
+      "command": "uvx",
+      "args": ["--from", "fastapi[standard]", "fastapi", "dev"],
+      "matchFrameworks": ["fastapi"]
+    }
+  ]
+}
