@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/steph-frtech/claude-code-up/discussions
+    about: General questions, ideas, "how do I…" — go here first.
+  - name: 📚 Contributing guide
+    url: https://github.com/steph-frtech/claude-code-up/blob/main/CONTRIBUTING.md
+    about: How to add an MCP / agent / scaffolder / bundle via a single JSON edit.

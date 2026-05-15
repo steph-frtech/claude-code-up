@@ -248,13 +248,19 @@ MCP initialize handshake: 3 ok · 1 failed · 1 skipped
 
 ## Contributing
 
-The fastest way to contribute: **edit a JSON file in `catalog/`**, run `npm run gen && npm run build`, open a PR.
+**95% of contributions = a single JSON edit. No TypeScript required.**
 
-- Add a new MCP: `catalog/mcps.json` + appropriate `applyWhen`.
-- Adjust which wshobson agents are default for your stack: `catalog/items/wshobson.json` → `tier` / `applyWhen`.
-- Add a scaffolder: `catalog/scaffolders.json` + the `matchFrameworks` mapping.
+| You want to add | Edit | Time |
+|---|---|---|
+| A new **MCP server** (Stripe, Linear, Sentry…) | `catalog/mcps.json` | ~5 min |
+| A new **agent / skill / command** from a source | `catalog/items/<source>.json` | ~3 min |
+| A new **bundled skill** with inline `.md` content | `catalog/skills.json` | ~5 min |
+| A new **framework scaffolder** (T3, Tauri…) | `catalog/scaffolders.json` | ~3 min |
+| A new **command bundle** (lib installs for a stack) | `catalog/command-bundles.json` | ~5 min |
 
-Bigger changes (new sources, new prompt steps, new generators) live in `src/`.
+The full guide with templates, the `applyWhen` semantics, validation, and the PR checklist is in [**CONTRIBUTING.md**](CONTRIBUTING.md).
+
+When you click **New Issue**, pick the right 🆕 template — it pre-fills the JSON shape we expect, mergeable in minutes.
 
 ```sh
 git clone https://github.com/steph-frtech/claude-code-up
