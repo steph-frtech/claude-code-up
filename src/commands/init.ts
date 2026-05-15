@@ -192,20 +192,28 @@ export async function init(opts: InitOptions): Promise<void> {
   }
 
   // Run the framework scaffolder BEFORE .claude/ so the scaffolder sees an
-  // empty dir (most refuse to run otherwise). Output is streamed via inherit.
+  // empty dir (most refuse to run otherwise). stdio "inherit" so the user
+  // sees the scaffolder's output AND can answer its interactive prompts.
   let scaffolderRan = false;
   if (answers.scaffolder) {
     p.log.step(
       `Running ${pc.cyan(`${answers.scaffolder.command} ${answers.scaffolder.args.join(" ")}`)} in ${path.relative(process.cwd(), targetPath) || "."}`,
     );
+    p.log.message(
+      pc.dim("Scaffolder is interactive — its prompts will appear below. Respond inline."),
+    );
+    // Add a visible separator so the scaffolder output is clearly distinct.
+    process.stdout.write("\n" + pc.dim("─────────── scaffolder output ───────────") + "\n");
     try {
       await execa(answers.scaffolder.command, answers.scaffolder.args, {
         cwd: targetPath,
         stdio: "inherit",
       });
+      process.stdout.write(pc.dim("──────────── end scaffolder ────────────") + "\n");
       p.log.success("Scaffolder completed");
       scaffolderRan = true;
     } catch (err) {
+      process.stdout.write(pc.dim("──────────── end scaffolder ────────────") + "\n");
       p.log.warn(
         `Scaffolder exited with error — continuing with claude-code-up config anyway. (${(err as Error).message.slice(0, 120)})`,
       );
@@ -476,7 +484,28 @@ export async function init(opts: InitOptions): Promise<void> {
     }
   }
 
+  // Final step: offer to drop the user directly into the new project dir
+  // via a child shell. When they `exit` it they're back to where they started.
+  const goInside = await p.confirm({
+    message: `Open a shell inside ${pc.cyan(rel)} now?`,
+    initialValue: true,
+  });
+  if (!p.isCancel(goInside) && goInside === true) {
+    const userShell = process.env.SHELL || "/bin/bash";
+    p.log.step(
+      `Launching ${pc.cyan(userShell)} in ${pc.cyan(rel)} — type ${pc.cyan("exit")} to return.`,
+    );
+    try {
+      await execa(userShell, [], {
+        cwd: targetPath,
+        stdio: "inherit",
+      });
+    } catch {
+      // Shell exit codes vary — ignore.
+    }
+  }
+
   p.outro(
-    `${pc.bold("cd")} ${pc.cyan(rel)} — happy hacking.`,
+    `${pc.bold("cd")} ${pc.cyan(rel)} — happy vibing 🎶`,
   );
 }
